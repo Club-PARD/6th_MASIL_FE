@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
+import Link from "next/link";
 
 // ✅ Swiper 컴포넌트/모듈 임포트
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,17 +14,24 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-export default function TripFilter() {
-  // 상태관리 (JSX 주석 ❌ -> JS 주석 ✅)
-  const [origin, setOrigin] = useState("");
-  const [dateTime, setDateTime] = useState<"" | "미정" | "지정">("미정");
-  const [people, setPeople] = useState(1);
-  const [transport, setTransport] = useState("");
-  const [budget, setBudget] =
-    useState<"" | "미정" | "절약" | "보통" | "프리미엄">("미정");
-  const [theme, setTheme] = useState("");
+//전역 변수
+import { useTripStore } from "@/stores/useTripStore";
 
-  const canSubmit = origin && transport && theme;
+//모달 불러오기
+import DateTimeModal from "@/components/DateTimeModal"; 
+
+//hook
+export default function TripFilter() {
+  const [origin, setOrigin] = useState("");
+  const [people, setPeople] = useState(1);
+
+  //zustand
+  const { date, startTime, endTime, guideType } = useTripStore();
+
+ //모달 관리
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   // 지도 api
   const openPostcode = () => {
@@ -103,16 +111,33 @@ export default function TripFilter() {
 
           {/* 그리드 */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6 text-center">
+
             {/* 출발일 및 소요시간 */}
-            <div
-              className="cursor-pointer select-none"
-              onClick={() => console.log("출발일 모달 오픈")}
-            >
+          <div className="cursor-pointer select-none">
               <div className="text-black text-xl">출발일 및 소요시간</div>
-              <div className="mt-1 text-3xl font-semibold underline">
-                {dateTime || "미정"}
+
+              {/* 이 영역을 클릭하면 모달 오픈 */}
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsModalOpen(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)}
+              >
+                <div>
+                  {date || "미정"}
+                  <br />
+                  {startTime || ""}
+                  {endTime || ""}
+                  {guideType || ""}
+                </div>
               </div>
             </div>
+
+            {/* 모달 열림 조건 */}
+            {isModalOpen && (
+              <DateTimeModal onClose={() => setIsModalOpen(false)} />
+            )}
 
             {/* 인원수 */}
             <div className="select-none">
@@ -153,7 +178,7 @@ export default function TripFilter() {
             >
               <div className="text-black text-xl">이동수단</div>
               <div className="mt-1 text-3xl font-semibold">
-                {transport || "선택"}
+                여기
               </div>
             </div>
 
@@ -164,7 +189,7 @@ export default function TripFilter() {
             >
               <div className="text-black text-xl">예산 및 식사</div>
               <div className="mt-1 text-3xl font-semibold underline">
-                {budget}
+                여기
               </div>
             </div>
 
@@ -175,7 +200,7 @@ export default function TripFilter() {
             >
               <div className="text-black text-xl">나들이 테마</div>
               <div className="mt-1 text-3xl font-semibold">
-                {theme || "선택"}
+                여기 
               </div>
             </div>
           </div>
