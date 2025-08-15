@@ -1,4 +1,4 @@
-import Card from "@/components/card";
+import Card from "@/components/GuideCard";
 
 export default function GuidePage() {
     return(
