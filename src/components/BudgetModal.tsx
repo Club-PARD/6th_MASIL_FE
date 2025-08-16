@@ -77,21 +77,25 @@ export default function BudgetModal({ open, onClose }: Props) {
                 <button
                   onClick={() => setTempBudget(Math.max(0, tempBudget - 1))}
                   disabled={tempBudget === 0}
-                  className={`w-7 h-7 rounded-full active:scale-95 size-6 bg-[#c2c2c2] ${
-                    tempBudget === 0 ? "text-gray-300" : "hover:bg-gray-50 "
+                  className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
+                    tempBudget === 0 
+                      ? "bg-[#C2C2C2] text-white cursor-not-allowed" 
+                      : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
                   }`}
                   aria-label="감소"
                 >
-                  –
+                  −
                 </button>
-                <span className="text-[#282828] text-3xl font-semibold font-['Pretendard']">
+                <span className="w-22 text-[#282828] text-3xl font-semibold font-['Pretendard']">
                   {tempBudget}만원
                 </span>
                 <button
                   onClick={() => setTempBudget(Math.min(10, tempBudget + 1))}
                   disabled={tempBudget === 10}
-                  className={`w-7 h-7 rounded-full active:scale-95 ${
-                    people === 10 ? "text-gray-300" : "hover:bg-gray-50 "
+                  className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
+                    tempBudget === 10 
+                      ? "bg-[#C2C2C2] text-white cursor-not-allowed" 
+                      : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
                   }`}
                   aria-label="증가"
                 >

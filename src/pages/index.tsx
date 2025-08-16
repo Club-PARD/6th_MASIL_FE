@@ -170,7 +170,7 @@ export default function TripFilter() {
                   }`}
                   aria-label="감소"
                 >
-                  –
+                  −
                 </button>
                 <span className="text-2xl font-extrabold">{people}</span>
                 <button
