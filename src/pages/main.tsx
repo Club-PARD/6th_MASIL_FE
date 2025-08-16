@@ -17,6 +17,7 @@ import "swiper/css/pagination";
 import {
   useTripStore,
   useMoveState,
+  useBudgetState,
   useThemeState,
 } from "@/stores/useTripStore";
 
@@ -24,6 +25,7 @@ import {
 import DateTimeModal from "@/components/DateTimeModal";
 import MoveModal from "@/components/MoveModal";
 import ThemeModal from "@/components/ThemeModal";
+import BudgetModal from "@/components/BudgetModal";
 
 //hook
 export default function TripFilter() {
@@ -33,6 +35,7 @@ export default function TripFilter() {
   //zustand
   const { date, startTime, endTime, guideType } = useTripStore();
   const { car } = useMoveState();
+  const { budget } = useBudgetState();
   const { theme } = useThemeState();
 
   //모달 관리
@@ -203,8 +206,26 @@ export default function TripFilter() {
             {/* 예산 */}
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">예산</div>
-              <div className="mt-1 text-3xl font-semibold">미정</div>
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsBudgetOpen(true)} // 예산 모달 열림
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
+                }
+              >
+                <div>{budget || "미정"}</div>
+              </div>
             </div>
+
+            {/* 예산 모달 */}
+            {isBudgetOpen && (
+              <BudgetModal
+                open={isBudgetOpen}
+                onClose={() => setIsBudgetOpen(false)}
+              />
+            )}
 
             {/* 나들이 테마 */}
             <div className="cursor-pointer select-none">
