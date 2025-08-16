@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useBudgetState, usePeopleState } from "@/stores/useTripStore";
 
 type Props = {
@@ -10,6 +10,14 @@ type Props = {
 export default function BudgetModal({ open, onClose }: Props) {
   const { people } = usePeopleState();
   const { budget, setBudget } = useBudgetState();
+  const [tempBudget, setTempBudget] = useState(0);
+
+  //   모달이 열릴 때 예산 상태를 임시로 설정
+  useEffect(() => {
+    if (open) {
+      setTempBudget(budget);
+    }
+  }, [open, budget]);
 
   //   ESC 키로 모달 닫기
   useEffect(() => {
@@ -23,6 +31,14 @@ export default function BudgetModal({ open, onClose }: Props) {
 
   //   모달 닫혀 있을 시 렌더링 X
   if (!open) return null;
+
+  // 적용 버튼 핸들러
+  const handleApply = () => {
+    setBudget(tempBudget);
+    onClose();
+  };
+
+  // 숫자 입력 핸들러
 
   return (
     <div
@@ -38,7 +54,9 @@ export default function BudgetModal({ open, onClose }: Props) {
         <div className="flex flex-col justify-center items-center w-full">
           {/* 헤더 */}
           <div className="flex items-center justify-between w-full text-2xl">
-            <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">예산</div>
+            <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">
+              예산
+            </div>
             <button
               aria-label="닫기"
               className="rounded size-8 hover:bg-black/5"
@@ -54,7 +72,7 @@ export default function BudgetModal({ open, onClose }: Props) {
           </div>
 
           {/* 예산 입력칸 */}
-          
+
 
           {/* 인당 예산 */}
           <div className="flex justify-between items-center w-full px-16 py-5 rounded-[5px] bg-white">
@@ -63,7 +81,7 @@ export default function BudgetModal({ open, onClose }: Props) {
                 인당 예산
               </div>
               <span className="text-[#282828] text-xl font-semibold font-['Pretendard']">
-                {budget}만원
+                {tempBudget}만원
               </span>
             </div>
 
@@ -75,15 +93,18 @@ export default function BudgetModal({ open, onClose }: Props) {
                 전체 예산
               </div>
               <span className="text-[#282828] text-xl font-semibold font-['Pretendard']">
-                {budget * people}만원
+                {tempBudget * people}만원
               </span>
             </div>
           </div>
         </div>
 
         {/* 적용 버튼 */}
-        <button className="w-full p-4 bg-white text-xl text-[#FE7600] font-semibold font-['Pretendard'] rounded-[5px] shadow-lg hover:bg-[#FE7600] hover:text-white">
-            적용
+        <button
+          className="w-full p-4 bg-white text-xl text-[#FE7600] font-semibold font-['Pretendard'] rounded-[5px] shadow-lg hover:bg-[#FE7600] hover:text-white"
+          onClick={handleApply}
+        >
+          적용
         </button>
       </div>
     </div>

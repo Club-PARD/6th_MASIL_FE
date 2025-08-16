@@ -222,7 +222,7 @@ export default function TripFilter() {
                   (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
                 }
               >
-                <div>{budget || "미정"}</div>
+                <div>{budget != null && budget > 0 ? `${budget * people}만원` : "미정"}</div>
               </div>
             </div>
 
