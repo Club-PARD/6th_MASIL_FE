@@ -51,7 +51,7 @@ export default function BudgetModal({ open, onClose }: Props) {
         className="flex flex-col justify-center items-center rounded-2xl bg-neutral-100 w-[632px] p-10 gap-[15px] shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col justify-center items-center w-full">
+        <div className="flex flex-col justify-center items-center w-full gap-6">
           {/* 헤더 */}
           <div className="flex items-center justify-between w-full text-2xl">
             <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">
@@ -66,19 +66,43 @@ export default function BudgetModal({ open, onClose }: Props) {
             </button>
           </div>
 
-          {/* 안내 배너 */}
-          <div className="mt-3 rounded-xl py-2 text-center text-base text-[#FE7600] font-semibold font-['Pretendard']">
-            나들이 갈 때 인당 예산을 입력해 주세요
-          </div>
-
-          {/* 예산 입력칸 */}
+          {/* 안내 배너 및 예산 입력란 */}
           <div>
-            
-          </div>
+            <div className="mt-3 rounded-xl py-2 text-center text-base text-[#FE7600] font-semibold font-['Pretendard']">
+              나들이 갈 때 인당 예산을 입력해 주세요
+            </div>
 
+            <div className="select-none">
+              <div className="mt-1 flex items-center justify-center gap-3">
+                <button
+                  onClick={() => setTempBudget(Math.max(0, tempBudget - 1))}
+                  disabled={tempBudget === 0}
+                  className={`w-7 h-7 rounded-full active:scale-95 size-6 bg-[#c2c2c2] ${
+                    tempBudget === 0 ? "text-gray-300" : "hover:bg-gray-50 "
+                  }`}
+                  aria-label="감소"
+                >
+                  –
+                </button>
+                <span className="text-[#282828] text-3xl font-semibold font-['Pretendard']">
+                  {tempBudget}만원
+                </span>
+                <button
+                  onClick={() => setTempBudget(Math.min(10, tempBudget + 1))}
+                  disabled={tempBudget === 10}
+                  className={`w-7 h-7 rounded-full active:scale-95 ${
+                    people === 10 ? "text-gray-300" : "hover:bg-gray-50 "
+                  }`}
+                  aria-label="증가"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
 
           {/* 인당 예산 */}
-          <div className="flex justify-between items-center w-full px-16 py-5 rounded-[5px] bg-white">
+          <div className="flex justify-between items-center w-full px-16 py-5 mt-6 rounded-[5px] bg-white">
             <div className="flex flex-col justify-center items-end w-28">
               <div className="text-[#282828] text-base font-normal font-['Pretendard'] gap-2.5">
                 인당 예산

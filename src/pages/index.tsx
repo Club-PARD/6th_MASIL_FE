@@ -214,7 +214,9 @@ export default function TripFilter() {
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">예산</div>
               <div
-                className="mt-1 text-3xl font-semibold underline"
+                className={`mt-1 text-3xl font-semibold ${
+                    budget != null && budget > 0 ? "" : "underline"
+                  }`}
                 onClick={() => setIsBudgetOpen(true)} // 예산 모달 열림
                 role="button"
                 tabIndex={0}
@@ -222,7 +224,7 @@ export default function TripFilter() {
                   (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
                 }
               >
-                <div>{budget != null && budget > 0 ? `${budget * people}만원` : "미정"}</div>
+                {budget != null && budget > 0 ? `${budget * people}만원` : "미정"}
               </div>
             </div>
 
@@ -238,7 +240,9 @@ export default function TripFilter() {
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">나들이 테마</div>
               <div
-                className="mt-1 text-3xl font-semibold underline"
+                className={`mt-1 text-3xl font-semibold ${
+                    theme ? "" : "underline"
+                  }`}
                 onClick={() => setIsThemeOpen(true)} // 나들이 테마 모달 열림
                 role="button"
                 tabIndex={0}
