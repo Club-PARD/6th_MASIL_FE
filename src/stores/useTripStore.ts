@@ -41,3 +41,39 @@ export const useMoveState = create<MoveState>((set)=> ({
 
   setCar: (v) => set({car:v}),
 }));
+
+//3번 인원수
+type PeopleState = {
+  people: number;
+  setPeople: (v:number) => void;
+}
+
+export const usePeopleState = create<PeopleState>((set) => ({
+  people: 1,
+
+  setPeople: (v) => set({ people: v }),
+}));
+
+//4번 예산
+type BudgetState = {
+  budget: number;
+  setBudget: (v:number) => void;
+}
+
+export const useBudgetState = create<BudgetState>((set) => ({
+  budget: 0,
+
+  setBudget: (v) => set({ budget: v }),
+}));
+
+//5번 나들이 테마
+type ThemeState = {
+  theme: string;
+  setTheme: (v:string) => void;
+}
+
+export const useThemeState = create<ThemeState>((set) => ({
+  theme: "",
+
+  setTheme: (v) => set({ theme: v }),
+}));

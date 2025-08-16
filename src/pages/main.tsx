@@ -14,25 +14,37 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 //전역 변수
-import { useTripStore,useMoveState } from "@/stores/useTripStore";
+import {
+  useTripStore,
+  useMoveState,
+  useBudgetState,
+  useThemeState,
+  usePeopleState,
+} from "@/stores/useTripStore";
 
 //모달 불러오기
-import DateTimeModal from "@/components/DateTimeModal"; 
-import MoveModal from "@/components/MoveModal"; 
+import DateTimeModal from "@/components/DateTimeModal";
+import MoveModal from "@/components/MoveModal";
+import ThemeModal from "@/components/ThemeModal";
+import BudgetModal from "@/components/BudgetModal";
 
 //hook
 export default function TripFilter() {
   const [origin, setOrigin] = useState("");
-  const [people, setPeople] = useState(1);
 
   //zustand
-  const { date, startTime, endTime, guideType, } = useTripStore();
-  const {car} = useMoveState();
- //모달 관리
+  const { date, startTime, endTime, guideType } = useTripStore();
+  const { people, setPeople } = usePeopleState();
+  const { car } = useMoveState();
+  const { budget } = useBudgetState();
+  const { theme } = useThemeState();
+
+  //모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false); //1번모달
+
   const [isMoveOpen, setIsMoveOpen] = useState<boolean>(false); //이동모달
-
-
+  const [isBudgetOpen, setIsBudgetOpen] = useState<boolean>(false); //예산 모달
+  const [isThemeOpen, setIsThemeOpen] = useState<boolean>(false); //테마 모달
 
   // 지도 api
   const openPostcode = () => {
@@ -112,9 +124,8 @@ export default function TripFilter() {
 
           {/* 그리드 */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6 text-center">
-
             {/* 출발일 및 소요시간 */}
-          <div className="cursor-pointer select-none">
+            <div className="cursor-pointer select-none">
               <div className="text-black text-xl">출발일 및 소요시간</div>
 
               {/* 이 영역을 클릭하면 모달 오픈 */}
@@ -123,7 +134,9 @@ export default function TripFilter() {
                 onClick={() => setIsModalOpen(true)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)
+                }
               >
                 <div>
                   {date || "미정"}
@@ -145,12 +158,10 @@ export default function TripFilter() {
               <p className="text-sm text-gray-500">인원수</p>
               <div className="mt-1 flex items-center justify-center gap-3">
                 <button
-                  onClick={() => setPeople((n) => Math.max(0, n - 1))}
+                  onClick={() => setPeople(Math.max(0, people - 1))}
                   disabled={people === 0}
                   className={`w-7 h-7 rounded-full active:scale-95 ${
-                    people === 0
-                      ? "text-gray-300"
-                      : "hover:bg-gray-50 "
+                    people === 0 ? "text-gray-300" : "hover:bg-gray-50 "
                   }`}
                   aria-label="감소"
                 >
@@ -158,12 +169,10 @@ export default function TripFilter() {
                 </button>
                 <span className="text-2xl font-extrabold">{people}</span>
                 <button
-                  onClick={() => setPeople((n) => Math.min(9, n + 1))}
+                  onClick={() => setPeople(Math.min(9, people + 1))}
                   disabled={people === 9}
                   className={`w-7 h-7 rounded-full active:scale-95 ${
-                    people === 9
-                      ? "text-gray-300"
-                      : "hover:bg-gray-50 "
+                    people === 9 ? "text-gray-300" : "hover:bg-gray-50 "
                   }`}
                   aria-label="증가"
                 >
@@ -173,48 +182,77 @@ export default function TripFilter() {
             </div>
 
             {/* 이동수단 */}
-          <div className="cursor-pointer select-none">
-            <div className="text-black text-xl">이동수단</div>
-            <div
-              className="mt-1 text-3xl font-semibold underline"
-              onClick={() => setIsMoveOpen(true)} // ✅ 이동수단 모달 열기
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) =>
-                (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)
-              }
-            >
-              <div>
-                {car || "선택하기"}
+            <div className="cursor-pointer select-none">
+              <div className="text-black text-xl">이동수단</div>
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsMoveOpen(true)} // ✅ 이동수단 모달 열기
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)
+                }
+              >
+                <div>{car || "선택"}</div>
               </div>
             </div>
-          </div>
 
-          {/* 이동수단 모달 */}
-          {isMoveOpen && <MoveModal open={isMoveOpen} onClose={() => setIsMoveOpen(false)} />}
+            {/* 이동수단 모달 */}
+            {isMoveOpen && (
+              <MoveModal
+                open={isMoveOpen}
+                onClose={() => setIsMoveOpen(false)}
+              />
+            )}
 
-          {/* 예산 */}
-            <div
-              className="cursor-pointer select-none"
-            >
+            {/* 예산 */}
+            <div className="cursor-pointer select-none">
               <div className="text-black text-xl">예산</div>
-              <div className="mt-1 text-3xl font-semibold">
-                미정
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsBudgetOpen(true)} // 예산 모달 열림
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
+                }
+              >
+                <div>{budget || "미정"}</div>
               </div>
             </div>
 
+            {/* 예산 모달 */}
+            {isBudgetOpen && (
+              <BudgetModal
+                open={isBudgetOpen}
+                onClose={() => setIsBudgetOpen(false)}
+              />
+            )}
 
             {/* 나들이 테마 */}
-            <div
-              className="cursor-pointer select-none"
-              onClick={() => console.log("테마 모달 오픈")}
-            >
+            <div className="cursor-pointer select-none">
               <div className="text-black text-xl">나들이 테마</div>
-              <div className="mt-1 text-3xl font-semibold">
-                여기 
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsThemeOpen(true)} // 나들이 테마 모달 열림
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsThemeOpen(true)
+                }
+              >
+                <div>{theme || "선택"}</div>
               </div>
             </div>
           </div>
+
+          {/* 나들이 테마 모달 */}
+          {isThemeOpen && (
+            <ThemeModal
+              open={isThemeOpen}
+              onClose={() => setIsThemeOpen(false)}
+            />
+          )}
 
           {/* 버튼 */}
           <div className="flex justify-center mt-8">
