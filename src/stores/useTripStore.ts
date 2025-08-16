@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+
+//출발일 및 소요시간
 type TripState = {
   // 날짜/시간
   date: string;             // 2025-08-15
@@ -25,4 +27,17 @@ export const useTripStore = create<TripState>((set) => ({
   setStartTime: (v) => set({ startTime: v }),
   setEndTime: (v) => set({ endTime: v }),
   setGuideType: (v) => set({ guideType: v }),
+}));
+
+
+//2번 이동수단 
+type MoveState = {
+  car: string;
+  setCar: (v:string) => void;
+}
+
+export const useMoveState = create<MoveState>((set)=> ({
+  car: "",
+
+  setCar: (v) => set({car:v}),
 }));

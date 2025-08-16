@@ -82,7 +82,7 @@ export default function DateTimeModal({ onClose }: Props) {
   return (
     <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center" onClick={onClose}>
       <div
-        className="bg-white w-full max-w-[560px] rounded-2xl p-4 shadow-2xl max-h-[88vh] overflow-auto"
+        className="bg-white w-full max-w-[640px] rounded-2xl p-4 shadow-2xl max-h-[520px] overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 상단 */}
@@ -211,7 +211,6 @@ export default function DateTimeModal({ onClose }: Props) {
         {/* 도착 시간대 (출발 선택 전 비활성화, 출발보다 큰 값만 허용) */}
         <div className="text-center text-xs text-gray-600 mb-2">
           도착 시간대 선택
-          {!startTime && <span className="text-red-500 ml-1">(먼저 출발 시간을 선택하세요)</span>}
         </div>
 
         <div className="flex items-center gap-2 mb-4">
@@ -272,6 +271,7 @@ export default function DateTimeModal({ onClose }: Props) {
 
         {/* 가이드 유형 */}
         <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="w-[560px] justify-start text-아웃라인-차콜 text-base font-normal font-['Pretendard']">편도 가이드는 가는 길만, 왕복 가이드는 가는 길·오는 길 모두 포함하여 안내합니다.</div><br></br>
           <button
             onClick={() => setGuideType("편도 가이드")}
             className={[
