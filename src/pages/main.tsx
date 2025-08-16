@@ -3,7 +3,6 @@
 
 import { useState } from "react";
 import Script from "next/script";
-import Link from "next/link";
 
 // ✅ Swiper 컴포넌트/모듈 임포트
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,10 +14,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 //전역 변수
-import { useTripStore } from "@/stores/useTripStore";
+import { useTripStore,useMoveState } from "@/stores/useTripStore";
 
 //모달 불러오기
 import DateTimeModal from "@/components/DateTimeModal"; 
+import MoveModal from "@/components/MoveModal"; 
 
 //hook
 export default function TripFilter() {
@@ -26,10 +26,11 @@ export default function TripFilter() {
   const [people, setPeople] = useState(1);
 
   //zustand
-  const { date, startTime, endTime, guideType } = useTripStore();
-
+  const { date, startTime, endTime, guideType, } = useTripStore();
+  const {car} = useMoveState();
  //모달 관리
-   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); //1번모달
+  const [isMoveOpen, setIsMoveOpen] = useState<boolean>(false); //이동모달
 
 
 
@@ -172,26 +173,36 @@ export default function TripFilter() {
             </div>
 
             {/* 이동수단 */}
+          <div className="cursor-pointer select-none">
+            <div className="text-black text-xl">이동수단</div>
+            <div
+              className="mt-1 text-3xl font-semibold underline"
+              onClick={() => setIsMoveOpen(true)} // ✅ 이동수단 모달 열기
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) =>
+                (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)
+              }
+            >
+              <div>
+                {car || "선택하기"}
+              </div>
+            </div>
+          </div>
+
+          {/* 이동수단 모달 */}
+          {isMoveOpen && <MoveModal open={isMoveOpen} onClose={() => setIsMoveOpen(false)} />}
+
+          {/* 예산 */}
             <div
               className="cursor-pointer select-none"
-              onClick={() => console.log("이동수단 모달 오픈")}
             >
-              <div className="text-black text-xl">이동수단</div>
+              <div className="text-black text-xl">예산</div>
               <div className="mt-1 text-3xl font-semibold">
-                여기
+                미정
               </div>
             </div>
 
-            {/* 예산 및 식사 */}
-            <div
-              className="cursor-pointer select-none"
-              onClick={() => console.log("예산 모달 오픈")}
-            >
-              <div className="text-black text-xl">예산 및 식사</div>
-              <div className="mt-1 text-3xl font-semibold underline">
-                여기
-              </div>
-            </div>
 
             {/* 나들이 테마 */}
             <div
