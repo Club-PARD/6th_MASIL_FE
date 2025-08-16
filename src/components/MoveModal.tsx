@@ -56,8 +56,11 @@ export default function MoveModal({ open, onClose }: Props) {
             const selected = car === opt;
             return (
               <button
-                key={opt}
-                onClick={() => setCar(opt)}
+                  key={opt}
+                    onClick={() => {
+                      setCar(opt);
+                      onClose();
+                    }}
                 className={[
                   "h-24 rounded-xl border text-sm font-medium transition",
                   selected
@@ -69,22 +72,6 @@ export default function MoveModal({ open, onClose }: Props) {
               </button>
             );
           })}
-        </div>
-
-        {/* 하단 버튼 */}
-        <div className="mt-5 flex justify-end gap-2">
-          <button
-            className="rounded-lg border border-black/10 px-4 py-2 text-sm hover:bg-black/5"
-            onClick={() => { setCar(""); onClose(); }}
-          >
-            초기화
-          </button>
-          <button
-            className="rounded-lg bg-black px-4 py-2 text-sm text-white hover:opacity-90"
-            onClick={onClose}
-          >
-            확인
-          </button>
         </div>
       </div>
     </div>
