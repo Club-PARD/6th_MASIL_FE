@@ -15,9 +15,9 @@ const Card = ({
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="flex flex-row w-[1121px] h-[130px] px-[72px] py-[29px] bg-white rounded-[20px] items-center justify-between">
-            <div>
-                <span className="text-3xl">코스 {number}</span>
+        <div className="flex flex-row w-[1121px] h-[130px] m-[] px-[72px] py-[29px] bg-white rounded-[20px] items-center justify-between">
+            <div className="text-3xl text-[#282828] text-3xl font-normal font-['Jalnan_2']">
+                마실코스 {number}
             </div>
             <div className="flex flex-row space-x-2">
                 {course.map((location, index) => (
@@ -27,8 +27,13 @@ const Card = ({
                     </div>
                 ))}
             </div>
-            <div className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 cursor-pointe text-xl font-semibold" onClick={() => setOpen(!open)}>
-                상세 보기
+            <div className="flex flex-col gap-[7px]">
+                <div className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 cursor-pointe text-xl text-[#5DA613] font-semibold" onClick={() => setOpen(!open)}>
+                    상세 보기
+                </div>
+                <div className="px-[15px] py-2.5 bg-[#DBF3C3] rounded-[5px] gap-2.5 cursor-pointe text-xl text-[#5DA613] font-semibold">
+                    다운로드
+                </div>
             </div>
         </div>
     );
