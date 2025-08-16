@@ -19,6 +19,7 @@ import {
   useMoveState,
   useBudgetState,
   useThemeState,
+  usePeopleState,
 } from "@/stores/useTripStore";
 
 //모달 불러오기
@@ -30,16 +31,17 @@ import BudgetModal from "@/components/BudgetModal";
 //hook
 export default function TripFilter() {
   const [origin, setOrigin] = useState("");
-  const [people, setPeople] = useState(1);
 
   //zustand
   const { date, startTime, endTime, guideType } = useTripStore();
+  const { people, setPeople } = usePeopleState();
   const { car } = useMoveState();
   const { budget } = useBudgetState();
   const { theme } = useThemeState();
 
   //모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false); //1번모달
+
   const [isMoveOpen, setIsMoveOpen] = useState<boolean>(false); //이동모달
   const [isBudgetOpen, setIsBudgetOpen] = useState<boolean>(false); //예산 모달
   const [isThemeOpen, setIsThemeOpen] = useState<boolean>(false); //테마 모달
@@ -156,7 +158,7 @@ export default function TripFilter() {
               <p className="text-sm text-gray-500">인원수</p>
               <div className="mt-1 flex items-center justify-center gap-3">
                 <button
-                  onClick={() => setPeople((n) => Math.max(0, n - 1))}
+                  onClick={() => setPeople(Math.max(0, people - 1))}
                   disabled={people === 0}
                   className={`w-7 h-7 rounded-full active:scale-95 ${
                     people === 0 ? "text-gray-300" : "hover:bg-gray-50 "
@@ -167,7 +169,7 @@ export default function TripFilter() {
                 </button>
                 <span className="text-2xl font-extrabold">{people}</span>
                 <button
-                  onClick={() => setPeople((n) => Math.min(9, n + 1))}
+                  onClick={() => setPeople(Math.min(9, people + 1))}
                   disabled={people === 9}
                   className={`w-7 h-7 rounded-full active:scale-95 ${
                     people === 9 ? "text-gray-300" : "hover:bg-gray-50 "
