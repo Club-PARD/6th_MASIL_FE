@@ -72,6 +72,9 @@ export default function BudgetModal({ open, onClose }: Props) {
           </div>
 
           {/* 예산 입력칸 */}
+          <div>
+            
+          </div>
 
 
           {/* 인당 예산 */}

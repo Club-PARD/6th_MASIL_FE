@@ -148,7 +148,7 @@ export default function TripFilter() {
               >
                 <div className="text-center justify-start">
                   <span className="text-검정 text-2xl font-semibold font-['Pretendard']">{date ? `${date} (${weekday})`: "미정"}<br/></span>
-                <span className="text-검정 text-xl font-semibold font-['Pretendard']">{startTime || ""} {endTime || ""} {guideType || ""}</span>
+                <span className="text-검정 text-xl font-semibold font-['Pretendard']">{startTime || ""}-{endTime || ""} / {guideType || ""}</span>
                 </div>
               </div>
             </div>
