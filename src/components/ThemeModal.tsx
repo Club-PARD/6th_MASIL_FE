@@ -15,7 +15,7 @@ const THEME_OPTIONS: Array<
 export default function ThemeModal({ open, onClose }: Props) {
   const { theme, setTheme } = useThemeState();
 
-  //   ESC 키로 모달 닫기 (옥토 코드 참조)
+  //   ESC 키로 모달 닫기
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
