@@ -8,6 +8,10 @@ type Props = {
   onClose: () => void;
 };
 
+const THEME_OPTIONS: Array<
+  "" | "축제·문화 탐방" | "원데이 클래스 체험" | "자연 경관 감상" | "쇼핑"
+> = ["축제·문화 탐방", "원데이 클래스 체험", "자연 경관 감상", "쇼핑"];
+
 export default function ThemeModal({ open, onClose }: Props) {
   const { theme, setTheme } = useThemeState();
 
