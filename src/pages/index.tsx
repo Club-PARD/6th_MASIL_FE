@@ -1,115 +1,274 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+// app/components/TripFilter.tsx
+"use client";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { useState } from "react";
+import Script from "next/script";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// ✅ Swiper 컴포넌트/모듈 임포트
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-export default function Home() {
+// ✅ Swiper 스타일
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import styles from "../styles/index.module.css";
+
+//전역 변수
+import {
+  useTripStore,
+  useMoveState,
+  useBudgetState,
+  useThemeState,
+  usePeopleState,
+} from "@/stores/useTripStore";
+
+//모달 불러오기
+import DateTimeModal from "@/components/DateTimeModal";
+import MoveModal from "@/components/MoveModal";
+import ThemeModal from "@/components/ThemeModal";
+import BudgetModal from "@/components/BudgetModal";
+
+//hook
+export default function TripFilter() {
+  const [origin, setOrigin] = useState("");
+
+  //zustand
+  const { date, startTime, endTime, guideType } = useTripStore();
+  const { people, setPeople } = usePeopleState();
+  const { car } = useMoveState();
+  const { budget } = useBudgetState();
+  const { theme } = useThemeState();
+
+  //모달 관리
+  const [isModalOpen, setIsModalOpen] = useState(false); //1번모달
+
+  const [isMoveOpen, setIsMoveOpen] = useState<boolean>(false); //이동모달
+  const [isBudgetOpen, setIsBudgetOpen] = useState<boolean>(false); //예산 모달
+  const [isThemeOpen, setIsThemeOpen] = useState<boolean>(false); //테마 모달
+
+  // 지도 api
+  const openPostcode = () => {
+    new (window as any).daum.Postcode({
+      oncomplete: function (data: any) {
+        setOrigin(data.address); // ✅ 주소를 상태에 저장
+      },
+    }).open();
+  };
+
+  //날짜구하기
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+
+  const weekday = date
+    ? weekdays[new Date(date).getDay()]  // "월" ~ "일"
+    : "";
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      {/* 캐러셀 */}
+      <div className="w-full">
+        <div className="w-full max-w-[1120px] mx-auto mb-6">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000 }}
+            loop
+            className={`${styles.swiper} rounded-2xl overflow-hidden`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <SwiperSlide>
+              <img
+                src="/banner1.jpg"
+                alt="배너1"
+                className="w-full h-64 object-cover"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/banner2.jpg"
+                alt="배너2"
+                className="w-full h-64 object-cover"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/banner3.jpg"
+                alt="배너3"
+                className="w-full h-64 object-cover"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/banner3.jpg"
+                alt="배너3"
+                className="w-full h-64 object-cover"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src="/banner3.jpg"
+                alt="배너3"
+                className="w-full h-64 object-cover"
+              />
+            </SwiperSlide>
+          </Swiper>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        {/* 본문 */}
+        <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto">
+          {/* 다음 우편번호 API 스크립트 */}
+          <Script
+            src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+            strategy="afterInteractive"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+          {/* 상단: 출발지 */}
+          <div className="text-center text-black text-xl">출발지</div>
+          <div className="cursor-pointer select-none" onClick={openPostcode}>
+            <div className="mt-1 text-center text-3xl font-semibold underline">
+              {origin || "검색"}
+            </div>
+          </div>
+
+          {/* 그리드 */}
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6 text-center">
+            {/* 출발일 및 소요시간 */}
+            <div className="cursor-pointer select-none">
+              <div className="text-black text-xl">출발일 및 소요시간</div>
+
+              {/* 이 영역을 클릭하면 모달 오픈 */}
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsModalOpen(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)
+                }
+              >
+                <div className="text-center justify-start">
+                  <span className="text-검정 text-2xl font-semibold font-['Pretendard']">{date ? `${date} (${weekday})`: "미정"}<br/></span>
+                <span className="text-검정 text-xl font-semibold font-['Pretendard']">{startTime || ""} {endTime || ""} {guideType || ""}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 모달 열림 조건 */}
+            {isModalOpen && (
+              <DateTimeModal onClose={() => setIsModalOpen(false)} />
+            )}
+
+            {/* 인원수 */}
+            <div className="select-none">
+              <p className="text-sm text-gray-500">인원수</p>
+              <div className="mt-1 flex items-center justify-center gap-3">
+                <button
+                  onClick={() => setPeople(Math.max(0, people - 1))}
+                  disabled={people === 0}
+                  className={`w-7 h-7 rounded-full active:scale-95 ${
+                    people === 0 ? "text-gray-300" : "hover:bg-gray-50 "
+                  }`}
+                  aria-label="감소"
+                >
+                  –
+                </button>
+                <span className="text-2xl font-extrabold">{people}</span>
+                <button
+                  onClick={() => setPeople(Math.min(9, people + 1))}
+                  disabled={people === 9}
+                  className={`w-7 h-7 rounded-full active:scale-95 ${
+                    people === 9 ? "text-gray-300" : "hover:bg-gray-50 "
+                  }`}
+                  aria-label="증가"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* 이동수단 */}
+            <div className="cursor-pointer select-none">
+              <div className="text-black text-xl">이동수단</div>
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsMoveOpen(true)} // ✅ 이동수단 모달 열기
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)
+                }
+              >
+                <div>{car || "선택"}</div>
+              </div>
+            </div>
+
+            {/* 이동수단 모달 */}
+            {isMoveOpen && (
+              <MoveModal
+                open={isMoveOpen}
+                onClose={() => setIsMoveOpen(false)}
+              />
+            )}
+
+            {/* 예산 */}
+            <div className="cursor-pointer select-none">
+              <div className="text-black text-xl">예산</div>
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsBudgetOpen(true)} // 예산 모달 열림
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
+                }
+              >
+                <div>{budget || "미정"}</div>
+              </div>
+            </div>
+
+            {/* 예산 모달 */}
+            {isBudgetOpen && (
+              <BudgetModal
+                open={isBudgetOpen}
+                onClose={() => setIsBudgetOpen(false)}
+              />
+            )}
+
+            {/* 나들이 테마 */}
+            <div className="cursor-pointer select-none">
+              <div className="text-black text-xl">나들이 테마</div>
+              <div
+                className="mt-1 text-3xl font-semibold underline"
+                onClick={() => setIsThemeOpen(true)} // 나들이 테마 모달 열림
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsThemeOpen(true)
+                }
+              >
+                <div>{theme || "선택"}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 나들이 테마 모달 */}
+          {isThemeOpen && (
+            <ThemeModal
+              open={isThemeOpen}
+              onClose={() => setIsThemeOpen(false)}
+            />
+          )}
+
+          {/* 버튼 */}
+          <div className="flex justify-center mt-8">
+            <div className="px-7 py-4 bg-neutral-200 rounded-[5px] inline-flex justify-center items-center gap-2.5">
+              <div className="text-center text-white text-3xl font-semibold font-['Pretendard']">
+                마실 가이드 보기
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
