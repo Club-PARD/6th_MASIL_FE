@@ -215,7 +215,7 @@ export default function TripFilter() {
               <div className="text-black text-xl">예산</div>
               <div
                 className={`mt-1 text-3xl font-semibold ${
-                    budget != null && budget > 0 ? "" : "underline"
+                    budget != null && budget * people > 0 ? "" : "underline"
                   }`}
                 onClick={() => setIsBudgetOpen(true)} // 예산 모달 열림
                 role="button"
@@ -224,7 +224,7 @@ export default function TripFilter() {
                   (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
                 }
               >
-                {budget != null && budget > 0 ? `${budget * people}만원` : "미정"}
+                {budget != null && budget * people > 0 ? `${budget * people}만원` : "미정"}
               </div>
             </div>
 

@@ -38,8 +38,6 @@ export default function BudgetModal({ open, onClose }: Props) {
     onClose();
   };
 
-  // 숫자 입력 핸들러
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"

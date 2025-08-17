@@ -39,6 +39,7 @@ export default function ThemeModal({ open, onClose }: Props) {
         className="w-[340px] rounded-2xl bg-white p-4 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
+        
       </div>
     </div>
   );
