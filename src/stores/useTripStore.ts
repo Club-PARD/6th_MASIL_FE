@@ -24,8 +24,8 @@ export const useTripStore = create<TripState>((set) => ({
   guideType: "",
 
   setDate: (v) => set({ date: v }),
-  setStartTime: (v) => set({ startTime: v }),
-  setEndTime: (v) => set({ endTime: v }),
+  setStartTime: (v) => set({ startTime: v + "-"}),
+  setEndTime: (v) => set({ endTime: v + "/"}),
   setGuideType: (v) => set({ guideType: v }),
 }));
 
