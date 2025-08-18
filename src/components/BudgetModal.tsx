@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useBudgetState, usePeopleState } from "@/stores/useTripStore";
+import { useBudgetStore, usePeopleStore } from "@/stores/useTripStore";
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 export default function BudgetModal({ open, onClose }: Props) {
-  const { people } = usePeopleState();
-  const { budget, setBudget } = useBudgetState();
+  const { people } = usePeopleStore();
+  const { budget, setBudget } = useBudgetStore();
   const [tempBudget, setTempBudget] = useState(0);
 
   //   모달이 열릴 때 예산 상태를 임시로 설정

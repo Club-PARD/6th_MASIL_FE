@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-
 //출발일 및 소요시간
 type TripState = {
   // 날짜/시간
@@ -29,6 +28,17 @@ export const useTripStore = create<TripState>((set) => ({
   setGuideType: (v) => set({ guideType: v }),
 }));
 
+//1번 출발지
+type OriginState = {
+  origin: string;
+  setOrigin: (v: string) => void;
+}
+
+export const useOriginStore = create<OriginState>((set) => ({
+  origin: "",
+
+  setOrigin: (v) => set({ origin: v }),
+}));
 
 //2번 이동수단 
 type MoveState = {
@@ -36,7 +46,7 @@ type MoveState = {
   setCar: (v:string) => void;
 }
 
-export const useMoveState = create<MoveState>((set)=> ({
+export const useMoveStore = create<MoveState>((set)=> ({
   car: "",
 
   setCar: (v) => set({car:v}),
@@ -48,7 +58,7 @@ type PeopleState = {
   setPeople: (v:number) => void;
 }
 
-export const usePeopleState = create<PeopleState>((set) => ({
+export const usePeopleStore = create<PeopleState>((set) => ({
   people: 1,
 
   setPeople: (v) => set({ people: v }),
@@ -60,7 +70,7 @@ type BudgetState = {
   setBudget: (v:number) => void;
 }
 
-export const useBudgetState = create<BudgetState>((set) => ({
+export const useBudgetStore = create<BudgetState>((set) => ({
   budget: 0,
 
   setBudget: (v) => set({ budget: v }),
@@ -72,7 +82,7 @@ type ThemeState = {
   setTheme: (v:string) => void;
 }
 
-export const useThemeState = create<ThemeState>((set) => ({
+export const useThemeStore = create<ThemeState>((set) => ({
   theme: "",
 
   setTheme: (v) => set({ theme: v }),
