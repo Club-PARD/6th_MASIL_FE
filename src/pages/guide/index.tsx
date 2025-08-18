@@ -30,33 +30,38 @@ export default function GuidePage() {
         />
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full gap-[20px]">
+      <div className="flex flex-col items-center justify-center w-full py-[30px] gap-[30px]">
         {/* 사용자 정보 카드 */}
-        <div className="flex flex-col items-center justify-center w-[1121px] h-[200px] rounded-2xl px-[91px] py-[30px] gap-[40px]">
-          <div>
-            <div>출발지</div>
-            <div>{origin}</div>
+        <div className="flex flex-col items-center justify-center w-[1121px] h-[200px] rounded-2xl px-[91px] py-[30px] gap-[40px] text-[#282828] text-xl font-normal font-['Pretendard']">
+          <div className="flex flex-col items-center justify-center gap-[8px]">
+            <p>출발지</p>
+            <p className="text-3xl font-semibold">{origin}</p>
           </div>
           <div className="flex flex-row justify-center w-full gap-[50px]">
-            <div>
-              <div>출발일</div>
-              <div>{date}</div>
+            <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+              <p>출발일</p>
+              <div className="flex flex-col items-center justify-center font-semibold">
+                <p className="text-2xl">{date}</p>
+                <p className="text-xl">
+                  {startTime}-{endTime} / {guideType}
+                </p>
+              </div>
             </div>
-            <div>
-              <div>인원수</div>
-              <div>{people}</div>
+            <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+              <p>인원수</p>
+              <p className="text-3xl font-semibold">{people}명</p>
             </div>
-            <div>
-              <div>이동수단</div>
-              <div>{car}</div>
+            <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+              <p>이동수단</p>
+              <p className="text-3xl font-semibold">{car}</p>
             </div>
-            <div>
-              <div>예산</div>
-              <div>{budget}</div>
+            <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+              <p>예산</p>
+              <p className="text-3xl font-semibold">{budget}만원</p>
             </div>
-            <div>
-              <div>나들이 테마</div>
-              <div>{theme}</div>
+            <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+              <p>나들이 테마</p>
+              <p className="text-3xl font-semibold">{theme}</p>
             </div>
           </div>
         </div>
