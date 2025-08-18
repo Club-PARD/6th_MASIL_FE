@@ -15,8 +15,9 @@ import cancel_neutral from "@/assets/icons/cancel_neutral.svg";
 import cancel_black from "@/assets/icons/cancel_black.svg";
 import download_white from "@/assets/icons/download_white.svg";
 import download_orange from "@/assets/icons/download_orange.svg";
+import pin_neutral from "@/assets/icons/pin_neutral.svg";
 
-type Props = {
+type GuideDetailProps = {
   planId: number;
   open: boolean;
   onClose: () => void;
@@ -28,9 +29,14 @@ type ItemDto = {
   duration: string;
   startTime: string;
   endTime: string;
+  isTransport: boolean;
 };
 
-export default function GuideDetailModal({ planId, open, onClose }: Props) {
+export default function GuideDetailModal({
+  planId,
+  open,
+  onClose,
+}: GuideDetailProps) {
   const { origin } = useOriginStore();
   const { date, startTime, endTime, guideType } = useTripStore();
   const { people } = usePeopleStore();
@@ -110,10 +116,36 @@ export default function GuideDetailModal({ planId, open, onClose }: Props) {
               </div>
             </div>
           </div>
+
+          {/* 상세 가이드 */}
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="flex flex-row items-center justify-center w-full p-[37px] gap-[80px] text-[30px] text-[#282828] font-semibold">
+              {/* 시간대 */}
+              <div className="flex justify-start w-[80px] h-full">time</div>
+              <div className="flex flex-col w-full h-full border-l-3 border-[#C2C2C2] px-[15px]">
+                {/* 장소 */}
+                <div className={`${"text-[#FE7600]"}`}>
+                  title 장소면 오렌지 아니면 검정
+                </div>
+                {/* 소요시간과 가격 */}
+                <div className="flex flex-row w-full justify-start pb-[19px] gap-[10px]">
+                  <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
+                    소요 시간 null 이면 X
+                  </div>
+                  <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
+                    가격 null 이면 X
+                  </div>
+                </div>
+                {/* 설명과 링크 */}
+                <div className="flex flex-col text-[24px] font-normal gap-[10px]">
+                  <div>설명</div>
+                  <div className="flex flex-row items-center underline">
+                    <Image src={pin_neutral} alt="pin" width={28} height={28} /> 링크</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* 상세 가이드 */}
-
 
         {/* 모달 밖 버튼 영역 */}
         <div className="flex flex-row items-center justify-center gap-[10px] text-xl font-semibold font-['Pretendard']">
