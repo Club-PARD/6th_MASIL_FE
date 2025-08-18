@@ -10,10 +10,16 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const Card = ({ number, course, ...props }: CardProps) => {
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
+  const handleOpen = () => {
+    if (!isGuideModalOpen) {
+      setIsGuideModalOpen(true);
+    }
+  };
+
   return (
     <div
       className="flex flex-row w-[1121px] h-[130px] px-[72px] py-[29px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-between text-[#282828] hover:text-[#FE7600]"
-      onClick={() => setIsGuideModalOpen(true)}
+      onClick={handleOpen}
     >
       <div className="text-3xl text-3xl font-normal font-['Jalnan_2']">
         마실코스 {number}
@@ -29,13 +35,19 @@ const Card = ({ number, course, ...props }: CardProps) => {
       <div className="flex flex-col gap-[7px]">
         <button
           className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
-          onClick={() => setIsGuideModalOpen(true)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsGuideModalOpen(true);
+          }}
         >
           상세 보기
         </button>
         <button
           className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log("다운로드 실행");
+          }}
         >
           다운로드
         </button>
