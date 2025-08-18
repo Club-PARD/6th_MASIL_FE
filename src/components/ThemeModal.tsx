@@ -34,7 +34,7 @@ const THEME_OPTIONS = [
 export default function ThemeModal({ open, onClose }: Props) {
   const { theme, setTheme } = useThemeState();
   const [headerText, setHeaderText] = useState<string>(
-    "원하시는 나들이 테마를 선택해 주세요"
+    theme || "원하시는 나들이 테마를 선택해 주세요"
   );
 
   //   ESC 키로 모달 닫기
@@ -77,7 +77,9 @@ export default function ThemeModal({ open, onClose }: Props) {
 
         {/* 컨텐츠 */}
         <div className="flex flex-col w-full items-center justify-center gap-5">
-          <div className="flex items-center justify-center w-full h-[50px] py-3 bg-white rounded-[10px] text-[#fe7600] text-base font-semibold font-['Pretendard']">
+          <div className=
+          {`flex items-center justify-center w-full h-[50px] py-3 bg-white rounded-[10px] text-base font-semibold font-['Pretendard'] ${
+            theme === "" ? "text-[#fe7600]" : "text-[#282828]"}`}>
             {headerText}
           </div>
 
