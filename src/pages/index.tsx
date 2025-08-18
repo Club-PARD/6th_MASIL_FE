@@ -41,7 +41,7 @@ export default function TripFilter() {
   const { theme } = useThemeState();
 
   //모달 관리
-  const [isModalOpen, setIsModalOpen] = useState(false); //1번모달
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); //1번모달
 
   const [isMoveOpen, setIsMoveOpen] = useState<boolean>(false); //이동모달
   const [isBudgetOpen, setIsBudgetOpen] = useState<boolean>(false); //예산 모달

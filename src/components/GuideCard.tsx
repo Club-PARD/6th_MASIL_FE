@@ -7,31 +7,37 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = ({ number, course, ...props }: CardProps) => {
-  const [open, setOpen] = useState(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-row w-[1121px] h-[130px] m-[] px-[72px] py-[29px] bg-white rounded-[20px] items-center justify-between">
-      <div className="text-3xl text-[#282828] text-3xl font-normal font-['Jalnan_2']">
+    <div
+      className="flex flex-row w-[1121px] h-[130px] px-[72px] py-[29px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-between text-[#282828] hover:text-[#FE7600]"
+      onClick={() => setIsGuideModalOpen(true)}
+    >
+      <div className="text-3xl text-3xl font-normal font-['Jalnan_2']">
         마실코스 {number}
       </div>
       <div className="flex flex-row space-x-2">
         {course.map((location, index) => (
-          <div key={index} className="text-2xl space-x-2">
+          <div key={index} className="text-[#282828] text-2xl space-x-2">
             <span>{location}</span>
             {index !== course.length - 1 && <span>→</span>}
           </div>
         ))}
       </div>
       <div className="flex flex-col gap-[7px]">
-        <div
-          className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 cursor-pointe text-xl text-[#5DA613] font-semibold"
-          onClick={() => setOpen(!open)}
+        <button
+          className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
+          onClick={() => setIsGuideModalOpen(true)}
         >
           상세 보기
-        </div>
-        <div className="px-[15px] py-2.5 bg-[#DBF3C3] rounded-[5px] gap-2.5 cursor-pointe text-xl text-[#5DA613] font-semibold">
+        </button>
+        <button
+          className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
+          onClick={() => {}}
+        >
           다운로드
-        </div>
+        </button>
       </div>
     </div>
   );
