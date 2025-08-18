@@ -12,23 +12,23 @@ const THEME_OPTIONS = [
   {
     title: "축제·문화 탐방",
     subtitle: "축제, 박물관 관람",
-    icon: "🎠"
+    icon: "🎠",
   },
   {
-    title: "원데이 클래스 체험", 
+    title: "원데이 클래스 체험",
     subtitle: "베이킹, 공방 체험",
-    icon: "🎨"
+    icon: "🎨",
   },
   {
     title: "자연 경관 감상",
-    subtitle: "공원, 산, 산책로 걷기", 
-    icon: "🏔️"
+    subtitle: "공원, 산, 산책로 걷기",
+    icon: "🏔️",
   },
   {
     title: "쇼핑",
     subtitle: "쇼핑 거리, 시장 구경",
-    icon: "🛍️"
-  }
+    icon: "🛍️",
+  },
 ];
 
 export default function ThemeModal({ open, onClose }: Props) {
@@ -77,9 +77,11 @@ export default function ThemeModal({ open, onClose }: Props) {
 
         {/* 컨텐츠 */}
         <div className="flex flex-col w-full items-center justify-center gap-5">
-          <div className=
-          {`flex items-center justify-center w-full h-[50px] py-3 bg-white rounded-[10px] text-base font-semibold font-['Pretendard'] ${
-            theme === "" ? "text-[#fe7600]" : "text-[#282828]"}`}>
+          <div
+            className={`flex items-center justify-center w-full h-[50px] py-3 bg-white rounded-[10px] text-base font-semibold font-['Pretendard'] ${
+              theme === "" ? "text-[#fe7600]" : "text-[#282828]"
+            }`}
+          >
             {headerText}
           </div>
 
@@ -103,7 +105,9 @@ export default function ThemeModal({ open, onClose }: Props) {
                   }
                 }}
               >
-                <div className="flex items-center justify-center w-full text-[50px]">{option.icon}</div>
+                <div className="flex items-center justify-center w-full text-[50px]">
+                  {option.icon}
+                </div>
                 <p className="text-xl font-semibold">{option.title}</p>
                 <p className="text-base font-normal">{option.subtitle}</p>
               </button>
