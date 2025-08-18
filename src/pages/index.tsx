@@ -16,11 +16,12 @@ import styles from "../styles/index.module.css";
 
 // 전역 상태(Zustand)
 import {
+  useOriginStore,
   useTripStore,
-  useMoveState,
-  useBudgetState,
-  useThemeState,
-  usePeopleState,
+  useMoveStore,
+  useBudgetStore,
+  useThemeStore,
+  usePeopleStore,
 } from "@/stores/useTripStore";
 
 // 모달
@@ -30,34 +31,34 @@ import ThemeModal from "@/components/ThemeModal";
 import BudgetModal from "@/components/BudgetModal";
 
 import axios from "axios";
+import Image from "next/image";
 
 // ---------- 유틸 함수 ----------
-  const toHM = (t?: string) => {
-    if (!t) return "";
-    // "09:00:00" 같이 초가 있으면 앞 5자리만
-    if (t.length >= 5) return t.slice(0, 5);
-    return t;
-  };
+const toHM = (t?: string) => {
+  if (!t) return "";
+  // "09:00:00" 같이 초가 있으면 앞 5자리만
+  if (t.length >= 5) return t.slice(0, 5);
+  return t;
+};
 
-  // "HH:mm-HH:mm" 생성 + 검증
-  const buildTimeTable = (start?: string, end?: string) => {
-    const s = toHM(start);
-    const e = toHM(end);
-    if (!s || !e) return "";
-    if (s >= e) throw new Error("도착 시간은 출발 시간보다 늦어야 합니다.");
-    return `${s}-${e}`; // 예: "09:00-18:00"
-  };
+// "HH:mm-HH:mm" 생성 + 검증
+const buildTimeTable = (start?: string, end?: string) => {
+  const s = toHM(start);
+  const e = toHM(end);
+  if (!s || !e) return "";
+  if (s >= e) throw new Error("도착 시간은 출발 시간보다 늦어야 합니다.");
+  return `${s}-${e}`; // 예: "09:00-18:00"
+};
 
 // ---------- 컴포넌트 ----------
 export default function TripFilter() {
-  const [origin, setOrigin] = useState("");
-
   // zustand 값
+  const { origin, setOrigin } = useOriginStore();
   const { date, startTime, endTime, guideType } = useTripStore();
-  const { people, setPeople } = usePeopleState();
-  const { car } = useMoveState();
-  const { budget } = useBudgetState();
-  const { theme } = useThemeState();
+  const { people, setPeople } = usePeopleStore();
+  const { car } = useMoveStore();
+  const { budget } = useBudgetStore();
+  const { theme } = useThemeStore();
 
   // 모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -90,7 +91,8 @@ export default function TripFilter() {
 
       if (!origin) throw new Error("출발지를 선택해 주세요.");
       if (!date) throw new Error("출발일을 선택해 주세요.");
-      if (!startTime || !endTime) throw new Error("출발/도착 시간을 선택해 주세요.");
+      if (!startTime || !endTime)
+        throw new Error("출발/도착 시간을 선택해 주세요.");
       if (!car) throw new Error("이동수단을 선택해 주세요.");
       if (!theme) throw new Error("나들이 테마를 선택해 주세요.");
 
@@ -99,19 +101,17 @@ export default function TripFilter() {
 
       //isOneWay: "편도"면 true, "왕복"이면 false
       const isOneWay =
-        typeof guideType === "string"
-          ? /편도/.test(guideType)
-          : !!guideType; 
+        typeof guideType === "string" ? /편도/.test(guideType) : !!guideType;
 
       const payload = {
-        origin,                                 // String
-        budget: perPersonBudget,                // int (1인 금액)
-        headcount: Number(people ?? 0),         // int
-        transportation: String(car),            // String
-        date,                                   // "yyyy-MM-dd"
+        origin, // String
+        budget: perPersonBudget, // int (1인 금액)
+        headcount: Number(people ?? 0), // int
+        transportation: String(car), // String
+        date, // "yyyy-MM-dd"
         timeTable: buildTimeTable(startTime, endTime), // "HH:mm-HH:mm"
-        theme: String(theme),                   // String
-        isOneWay,                               // boolean (true=편도, false=왕복)
+        theme: String(theme), // String
+        isOneWay, // boolean (true=편도, false=왕복)
       };
 
       const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/trips"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
@@ -127,22 +127,22 @@ export default function TripFilter() {
     }
   };
 
-    //마지막 마실 vaildiator
+  //마지막 마실 vaildiator
   const isFormValid =
-  !!origin &&
-  !!date &&
-  !!startTime &&
-  !!endTime &&
-  !!car &&
-  !!theme &&
-  (people ?? 0) > 0 &&
-  (budget ?? 0) > 0;
+    !!origin &&
+    !!date &&
+    !!startTime &&
+    !!endTime &&
+    !!car &&
+    !!theme &&
+    (people ?? 0) > 0 &&
+    (budget ?? 0) > 0;
 
   return (
     <>
       {/* 캐러셀 */}
       <div className="w-full">
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation
@@ -152,27 +152,49 @@ export default function TripFilter() {
             className={`${styles.swiper} rounded-2xl overflow-hidden`}
           >
             <SwiperSlide>
-              <img src="/t2.svg" alt="배너1" className="w-full h-auto object-cover" />
+              <img
+                src="/t2.svg"
+                alt="배너1"
+                className="w-full h-auto object-cover"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/t2.svg" alt="배너2" className="w-full h-auto object-cover" />
+              <img
+                src="/t2.svg"
+                alt="배너2"
+                className="w-full h-auto object-cover"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/t2.svg" alt="배너3" className="w-full h-auto object-cover" />
+              <img
+                src="/t2.svg"
+                alt="배너3"
+                className="w-full h-auto object-cover"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/t2.svg" alt="배너3" className="w-full h-auto object-cover" />
+              <img
+                src="/t2.svg"
+                alt="배너3"
+                className="w-full h-auto object-cover"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/t2.svg" alt="배너3" className="w-full h-auto object-cover" />
+              <img
+                src="/t2.svg"
+                alt="배너3"
+                className="w-full h-auto object-cover"
+              />
             </SwiperSlide>
           </Swiper>
-            <img
-              src="/logo.svg"
-              alt="로고"
-              className="absolute top-1/10 left-45/100 w-40 h-auto z-10"
-            />
-          </div>
+          <Image
+            src="/logo.svg"
+            alt="로고"
+            className="absolute top-[75px] left-1/2 -translate-x-1/2 -translate-y-full z-10"
+            width={100}
+            height={100}
+          />
+        </div>
         {/* 본문 */}
         <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto -mt-30 relative z-10">
           {/* 다음 우편번호 API */}
@@ -199,11 +221,14 @@ export default function TripFilter() {
                 onClick={() => setIsModalOpen(true)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)
+                }
               >
                 <div className="text-center justify-start">
                   <span className="text-검정 text-2xl font-semibold font-['Pretendard']">
-                    {date ? `${date} (${weekday})` : "미정"}<br />
+                    {date ? `${date} (${weekday})` : "미정"}
+                    <br />
                   </span>
                   <span className="text-검정 text-xl font-semibold font-['Pretendard']">
                     {startTime || ""}
@@ -213,7 +238,9 @@ export default function TripFilter() {
                 </div>
               </div>
             </div>
-            {isModalOpen && <DateTimeModal onClose={() => setIsModalOpen(false)} />}
+            {isModalOpen && (
+              <DateTimeModal onClose={() => setIsModalOpen(false)} />
+            )}
 
             {/* 인원수 */}
             <div className="select-none">
@@ -255,12 +282,19 @@ export default function TripFilter() {
                 onClick={() => setIsMoveOpen(true)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsMoveOpen(true)
+                }
               >
                 <div>{car || "선택"}</div>
               </div>
             </div>
-            {isMoveOpen && <MoveModal open={isMoveOpen} onClose={() => setIsMoveOpen(false)} />}
+            {isMoveOpen && (
+              <MoveModal
+                open={isMoveOpen}
+                onClose={() => setIsMoveOpen(false)}
+              />
+            )}
 
             {/* 예산 */}
             <div className="cursor-pointer select-none">
@@ -272,30 +306,46 @@ export default function TripFilter() {
                 onClick={() => setIsBudgetOpen(true)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsBudgetOpen(true)
+                }
               >
                 {budget != null && budget * people > 0
                   ? `${budget * people}만원`
                   : "미정"}
               </div>
             </div>
-            {isBudgetOpen && <BudgetModal open={isBudgetOpen} onClose={() => setIsBudgetOpen(false)} />}
+            {isBudgetOpen && (
+              <BudgetModal
+                open={isBudgetOpen}
+                onClose={() => setIsBudgetOpen(false)}
+              />
+            )}
 
             {/* 테마 */}
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">나들이 테마</div>
               <div
-                className={`mt-1 text-3xl font-semibold ${theme ? "" : "underline"}`}
+                className={`mt-1 text-3xl font-semibold ${
+                  theme ? "" : "underline"
+                }`}
                 onClick={() => setIsThemeOpen(true)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsThemeOpen(true)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && setIsThemeOpen(true)
+                }
               >
                 <div>{theme || "선택"}</div>
               </div>
             </div>
           </div>
-          {isThemeOpen && <ThemeModal open={isThemeOpen} onClose={() => setIsThemeOpen(false)} />}
+          {isThemeOpen && (
+            <ThemeModal
+              open={isThemeOpen}
+              onClose={() => setIsThemeOpen(false)}
+            />
+          )}
 
           {/* 버튼 */}
           <div className="flex justify-center mt-8">
@@ -303,7 +353,11 @@ export default function TripFilter() {
               onClick={handleSubmit}
               disabled={!isFormValid || submitting}
               className={`px-7 py-4 rounded-[5px] inline-flex justify-center items-center gap-2.5 transition
-                ${!isFormValid || submitting ? "bg-stone-300 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600"}
+                ${
+                  !isFormValid || submitting
+                    ? "bg-stone-300 cursor-not-allowed"
+                    : "bg-orange-500 hover:bg-orange-600"
+                }
               `}
             >
               <span className="text-center text-white text-3xl font-semibold font-['Pretendard']">
@@ -311,7 +365,9 @@ export default function TripFilter() {
               </span>
             </button>
           </div>
-          {errorMsg && <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>}
+          {errorMsg && (
+            <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
+          )}
         </section>
       </div>
     </>

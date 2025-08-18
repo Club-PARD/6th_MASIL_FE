@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useThemeState } from "@/stores/useTripStore";
+import { useThemeStore } from "@/stores/useTripStore";
 
 type Props = {
   open: boolean;
@@ -32,7 +32,7 @@ const THEME_OPTIONS = [
 ];
 
 export default function ThemeModal({ open, onClose }: Props) {
-  const { theme, setTheme } = useThemeState();
+  const { theme, setTheme } = useThemeStore();
   const [headerText, setHeaderText] = useState<string>(
     theme || "원하시는 나들이 테마를 선택해 주세요"
   );
