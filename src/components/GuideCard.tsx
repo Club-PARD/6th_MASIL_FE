@@ -7,7 +7,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = ({ number, course, ...props }: CardProps) => {
-  const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
   return (
     <div
