@@ -105,6 +105,7 @@ export default function DateTimeModal({ onClose }: Props) {
     !!startTime &&
     !!endTime &&
     getIdx(endTime) > getIdx(startTime) + 1;
+    !!guideType;
 
   const handleApply = () => {
     if (!canApply) return;
@@ -360,41 +361,55 @@ export default function DateTimeModal({ onClose }: Props) {
         </div>
 
         {/* 가이드 유형 */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="col-span-2 text-sm text-gray-600">
-            편도 가이드는 가는 길만, 왕복 가이드는 가는 길·오는 길 모두 포함하여 안내합니다.
+
+        <section className="bg-white mx-11 mt-5">
+          <div className="text-left text-gray-900 text-xl pl-3 font-semibold leading-7">
+            가이드 방식 선택
           </div>
 
-          <button
-            onClick={() => setGuideType("편도")}
-            className={[
-              "h-10 rounded-md border text-sm ml-11 transition-colors",
-              guideType === "편도"
-                ? "bg-orange-500 text-white border-orange-500"
-                : "bg-white hover:bg-orange-300 border-gray-300",
-            ].join(" ")}
-          >
-            편도 가이드
-          </button>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            {/* 안내 문구: 2칸 모두 사용 */}
+            <div className="col-span-2 flex items-start gap-2 text-[13px] text-gray-600 bg-white pl-3 pr-2">
+              <img src="/!.svg" alt="안내" className="w-4 h-4 mt-0.5" />
+              <span>
+                편도 가이드는 가는 길, 왕복 가이드는 가는 길·오는 길 모두 포함하여 안내합니다.
+              </span>
+            </div>
 
-          <button
-            onClick={() => setGuideType("왕복")}
-            className={[
-              "h-10 rounded-md border text-sm mr-11 transition-colors",
-              guideType === "왕복"
-                ? "bg-orange-500 text-white border-orange-500"
-                : "bg-white hover:bg-orange-300 border-gray-300",
-            ].join(" ")}
-          >
-            왕복 가이드
-          </button>
-        </div>
+            {/* 버튼 영역: 2칸 모두 사용 */}
+            <div className="col-span-2 flex justify-center gap-6 pt-1 pb-4 bg-white">
+              <button
+                onClick={() => setGuideType("편도")}
+                aria-pressed={guideType === "편도"}
+                className={`h-10 px-15 rounded-md border text-sm transition-colors ${
+                  guideType === "편도"
+                    ? "bg-orange-500 text-white border-orange-500"
+                    : "bg-white hover:bg-orange-300 border-gray-300"
+                }`}
+              >
+                편도 가이드
+              </button>
 
-        {/* 적용 */}
+              <button
+                onClick={() => setGuideType("왕복")}
+                aria-pressed={guideType === "왕복"}
+                className={`h-10 px-15 rounded-md border text-sm transition-colors ${
+                  guideType === "왕복"
+                    ? "bg-orange-500 text-white border-orange-500"
+                    : "bg-white hover:bg-orange-300 border-gray-300"
+                }`}
+              >
+                왕복 가이드
+              </button>
+            </div>
+          </div>
+      </section>
+
+      {/* 적용 */}
         <button
           onClick={handleApply}
           disabled={!canApply}
-          className={`w-full h-11 rounded-md text-base font-semibold transition-colors ${
+          className={`w-127 h-11 rounded-md text-base font-semibold transition-colors ${
             canApply
               ? "bg-gray-700 text-white hover:bg-orange-300 hover:text-black"
               : "bg-gray-300 text-gray-500 cursor-not-allowed disabled:hover:bg-transparent"
