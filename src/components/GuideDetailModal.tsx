@@ -1,12 +1,46 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  useOriginStore,
+  useBudgetStore,
+  useMoveStore,
+  usePeopleStore,
+  useThemeStore,
+  useTripStore,
+} from "@/stores/useTripStore";
+
+import Image from "next/image";
+import cancel_neutral from "@/assets/icons/cancel_neutral.svg";
+import cancel_black from "@/assets/icons/cancel_black.svg";
+import download_white from "@/assets/icons/download_white.svg";
+import download_orange from "@/assets/icons/download_orange.svg";
 
 type Props = {
+  planId: number;
   open: boolean;
   onClose: () => void;
 };
-export default function GuideDetailModal({ open, onClose }: Props) {
+
+type ItemDto = {
+  title: string;
+  orderNum: number;
+  duration: string;
+  startTime: string;
+  endTime: string;
+};
+
+export default function GuideDetailModal({ planId, open, onClose }: Props) {
+  const { origin } = useOriginStore();
+  const { date, startTime, endTime, guideType } = useTripStore();
+  const { people } = usePeopleStore();
+  const { car } = useMoveStore();
+  const { budget } = useBudgetStore();
+  const { theme } = useThemeStore();
+
+  const [isCancelHover, setIsCancelHover] = useState(false);
+  const [isDownloadHover, setIsDownloadHover] = useState(false);
+
   //   ESC 키로 모달 닫기
   useEffect(() => {
     if (!open) return;
@@ -22,20 +56,95 @@ export default function GuideDetailModal({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/40 gap-[22px]"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center cursor-default bg-black/40 gap-[22px]"
       onClick={onClose}
       aria-modal="true"
       role="dialog"
     >
       <div
-        className="flex flex-col justify-center items-center rounded-2xl bg-neutral-100 w-[632px] p-10 gap-[15px] shadow-xl"
+        className="flex flex-col justify-center items-center gap-[22px]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-row items-center justify-center">
-          <button className="" onClick={onClose}>
+        {/* 모달 내부 */}
+        <div className="flex flex-col justify-start items-center w-[1083px] h-[700px] p-[50px] rounded-2xl bg-white text-[#282828] gap-[15px] shadow-xl">
+          {/* 헤더 */}
+          <div className="flex flex-row items-center justify-center w-full gap-[56px]">
+            <hr className="w-[40%] h-4 bg-[#FE7600] border-0 rounded-l-full" />
+            <div className="flex items-center justify-center w-[20%] text-3xl font-bold font-['Jalnan_2']">
+              마실코스 1
+            </div>
+            <hr className="w-[40%] h-4 bg-[#FE7600] border-0 rounded-r-full" />
+          </div>
+
+          {/* 사용자 정보 카드 */}
+          <div className="flex flex-col items-center justify-center w-full h-[200px] rounded-2xl bg-neutral-100 px-[91px] py-[30px] gap-[40px] text-[#282828] text-xl font-normal font-['Pretendard']">
+            <div className="flex flex-col items-center justify-center gap-[8px]">
+              <p>출발지</p>
+              <p className="text-3xl font-semibold">{origin}</p>
+            </div>
+            <div className="flex flex-row justify-center w-full gap-[50px]">
+              <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+                <p>출발일</p>
+                <div className="flex flex-col items-center justify-center font-semibold">
+                  <p className="text-2xl">{date}</p>
+                  <p className="text-xl">
+                    {startTime}-{endTime} / {guideType}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+                <p>인원수</p>
+                <p className="text-3xl font-semibold">{people}명</p>
+              </div>
+              <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+                <p>이동수단</p>
+                <p className="text-3xl font-semibold">{car}</p>
+              </div>
+              <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+                <p>예산</p>
+                <p className="text-3xl font-semibold">{budget}만원</p>
+              </div>
+              <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
+                <p>나들이 테마</p>
+                <p className="text-3xl font-semibold">{theme}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 상세 가이드 */}
+
+
+        {/* 모달 밖 버튼 영역 */}
+        <div className="flex flex-row items-center justify-center gap-[10px] text-xl font-semibold font-['Pretendard']">
+          <button
+            className="flex items-center justify-center w-40 h-15 rounded-[5px] bg-[#ECECEC] text-[#757575] gap-[10px] cursor-pointer hover:bg-neutral-300 hover:text-[#282828]"
+            onClick={onClose}
+            onMouseEnter={() => setIsCancelHover(true)}
+            onMouseLeave={() => setIsCancelHover(false)}
+          >
+            <Image
+              src={isCancelHover ? cancel_black : cancel_neutral}
+              alt="x"
+              width={24}
+              height={24}
+            />
             닫기
           </button>
-          <button>다운로드</button>
+          <button
+            className="flex items-center justify-center w-40 h-15 rounded-[5px] bg-[#FE7600] text-white gap-[10px] cursor-pointer hover:bg-neutral-100 hover:text-[#FE7600]"
+            // onClick={}
+            onMouseEnter={() => setIsDownloadHover(true)}
+            onMouseLeave={() => setIsDownloadHover(false)}
+          >
+            <Image
+              src={isDownloadHover ? download_orange : download_white}
+              alt="x"
+              width={24}
+              height={24}
+            />
+            다운로드
+          </button>
         </div>
       </div>
     </div>

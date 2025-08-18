@@ -1,13 +1,18 @@
 import { HTMLAttributes, useState } from "react";
 import GuideDetailModal from "./GuideDetailModal";
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  number: number; // 몇 번째 코스인지
-  course: string[]; // 가이드 코스
-  // 자세한 내용으로 들어올 것들 필요함
-}
+type ItemDto = {
+  title: string;
+  orderNum: number;
+};
 
-const Card = ({ number, course, ...props }: CardProps) => {
+type CardProps = {
+  planId: number; // 가이드 ID
+  order: number; // 몇 번째 코스인지
+  itemDtos: ItemDto[]; // 코스
+};
+
+const Card = ({ planId, order, itemDtos }: CardProps) => {
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
   const handleOpen = () => {
@@ -22,13 +27,13 @@ const Card = ({ number, course, ...props }: CardProps) => {
       onClick={handleOpen}
     >
       <div className="text-3xl text-3xl font-normal font-['Jalnan_2']">
-        마실코스 {number}
+        마실코스 {order}
       </div>
       <div className="flex flex-row space-x-2">
-        {course.map((location, index) => (
+        {itemDtos.map((item, index) => (
           <div key={index} className="text-[#282828] text-2xl space-x-2">
-            <span>{location}</span>
-            {index !== course.length - 1 && <span>→</span>}
+            <span>{item.title}</span>
+            {index !== itemDtos.length - 1 && <span>→</span>}
           </div>
         ))}
       </div>
@@ -55,6 +60,7 @@ const Card = ({ number, course, ...props }: CardProps) => {
 
       {isGuideModalOpen && (
         <GuideDetailModal
+          planId={planId}
           open={isGuideModalOpen}
           onClose={() => setIsGuideModalOpen(false)}
         />
