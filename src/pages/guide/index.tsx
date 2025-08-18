@@ -1,11 +1,23 @@
 import Card from "@/components/GuideCard";
+import Image from "next/image";
+import {
+  useBudgetState,
+  useMoveState,
+  usePeopleState,
+  useThemeState,
+  useTripStore,
+} from "@/stores/useTripStore";
 
 export default function GuidePage() {
+  const { date, startTime, endTime, guideType } = useTripStore();
+  const { people, setPeople } = usePeopleState();
+  const { car } = useMoveState();
+  const { budget } = useBudgetState();
+  const { theme } = useThemeState();
+
   return (
     <div className="flex flex-col items-center min-h-lvh bg-[#F6F6F6] p-[41px] gap-[35px]">
-      <div className="flex items-center justify-center w-full text-[#fe7600] text-[40px] font-normal font-['Jalnan_2']">
-        마실
-      </div>
+      <Image src="/logo.svg" alt="마실" width={100} height={100} />
 
       <div className="flex flex-col items-center justify-center w-full gap-[20px]">
         {/* 사용자 정보 카드 */}

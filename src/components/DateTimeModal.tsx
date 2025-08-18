@@ -145,23 +145,32 @@ export default function DateTimeModal({ onClose }: Props) {
 
         {/* 달력 (해당 월만, **일요일 시작**) */}
         <div className="mb-3">
-          <div className="flex items-center justify-between ml-11 mr-11 bg-white">
+          <div className="flex items-center justify-center gap-8 bg-white ml-11 mr-11">
             <button
               onClick={() =>
-                setViewMonth((m) => (m === 0 ? (setViewYear((y) => y - 1), 11) : m - 1))
+                setViewMonth((m) =>
+                  m === 0 ? (setViewYear((y) => y - 1), 11) : m - 1
+                )
               }
-              className="px-2 py-1 rounded hover:bg-orange-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
+              className="px-1 py-1 disabled:opacity-40 hover:scale-110 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors text-lg font-extrabold"
               aria-label="이전 달"
               disabled={prevDisabled}
             >
               ‹
             </button>
-            <div className="text-base font-semibold">{monthLabel}</div>
+
+            {/* 월 텍스트 */}
+            <div className="text-xl font-semibold text-center">
+              {monthLabel}
+            </div>
+
             <button
               onClick={() =>
-                setViewMonth((m) => (m === 11 ? (setViewYear((y) => y + 1), 0) : m + 1))
+                setViewMonth((m) =>
+                  m === 11 ? (setViewYear((y) => y + 1), 0) : m + 1
+                )
               }
-              className="px-2 py-1 rounded hover:bg-orange-300 transition-colors"
+              className="px-1 py-1 transition-color hover:scale-110 text-lg font-extrabold"
               aria-label="다음 달"
             >
               ›
@@ -183,8 +192,8 @@ export default function DateTimeModal({ onClose }: Props) {
             ))}
           </div>
 
-          {/* 해당 월 + 앞쪽 빈칸 포함 */}
-          <div className="grid grid-cols-7 gap-1 ml-11 mr-11 bg-white">
+          {/* 해당 월 + 앞쪽 빈칸 포함 (정사각형 + 출발일/오늘 라벨) */}
+          <div className="grid grid-cols-7 gap-1 ml-11 mr-11 bg-white overflow-visible">
             {calendarCells.map((d, idx) => {
               if (!d) return <div key={`empty-${idx}`} />;
 
@@ -194,32 +203,47 @@ export default function DateTimeModal({ onClose }: Props) {
               const dow = d.getDay(); // 0=일, 6=토
 
               return (
-                <button
-                  key={fmt(d)}
-                  onClick={() => {
-                    if (isPast) return;
-                    setDate(fmt(d));
-                  }}
-                  disabled={isPast}
-                  aria-disabled={isPast}
-                  title={isPast ? "오늘 이전 날짜는 선택할 수 없습니다" : ""}
-                  className={[
-                    "h-10 text-sm leading-none  rounded transition-colors",
-                    isSelected
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : isPast
-                        ? "bg-white text-gray-300 border-gray-200 cursor-not-allowed disabled:hover:bg-transparent"
-                        : [
-                            "bg-white hover:bg-orange-300 border-gray-200",
-                            dow === 0 ? "text-red-600"
-                              : dow === 6 ? "text-blue-600"
-                              : "text-gray-900",
-                          ].join(" "),
-                    isToday && !isSelected ? "ring-1 ring-gray-300" : "",
-                  ].join(" ")}
-                >
-                  {d.getDate()}
-                </button>
+                <div key={fmt(d)} className="relative flex items-start justify-center pb-4">
+                  <button
+                    onClick={() => {
+                      if (isPast) return;
+                      setDate(fmt(d));
+                    }}
+                    disabled={isPast}
+                    aria-disabled={isPast}
+                    title={isPast ? "오늘 이전 날짜는 선택할 수 없습니다" : ""}
+                    className={[
+                      // 정사각형 셀
+                      "w-10 h-10 flex items-center justify-center text-sm leading-none",
+                      "rounded-md transition-colors",
+                      isSelected
+                        ? "bg-orange-500 text-white border-orange-500"
+                        : isPast
+                          ? "bg-white text-gray-300 border-gray-200 cursor-not-allowed disabled:hover:bg-transparent"
+                          : [
+                              "bg-white hover:bg-orange-300 border-gray-200",
+                              dow === 0 ? "text-red-600"
+                                : dow === 6 ? "text-blue-600"
+                                : "text-gray-900",
+                            ].join(" "),
+                      isToday && !isSelected ? "ring-1 ring-gray-300" : "",
+                    ].join(" ")}
+                  >
+                      <span className="relative -top-0.5 leading-none">{d.getDate()}</span>
+                  </button>
+
+                  {/* 오늘 라벨 or 출발일 라벨 */}
+                  {isToday && !isSelected && (
+                    <span className="absolute bottom-1/4  left-50/100 -translate-x-1/2 py-0.5 text-xs font-semibold  text-gray-500 ">
+                      오늘
+                    </span>
+                  )}
+                  {isSelected && (
+                    <span className="absolute bottom-1/4 left-1/2 -translate-x-1/2  py-0.5 text-xs font-semibold rounded text-white ">
+                      출발일
+                    </span>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -230,7 +254,7 @@ export default function DateTimeModal({ onClose }: Props) {
 
         <div className="flex items-center gap-2 pt-3 pb-5 ml-11 mr-11 bg-white">
           <button
-            className="px-2 py-1 rounded hover:bg-orange-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0 transition-colors"
+            className="px-2 py-1 rounded hover:scale-110 disabled:opacity-40 disabled:cursor-not-allowed font-extrabold disabled:hover:bg-transparent shrink-0 transition-colors"
             onClick={() => setStartPage((p) => Math.max(0, p - 1))}
             aria-label="이전 6개"
             disabled={startPage === 0}
@@ -256,7 +280,7 @@ export default function DateTimeModal({ onClose }: Props) {
                     if (endPage < minEndPage) setEndPage(minEndPage);
                   }}
                   className={[
-                    "px-4 py-2 rounded-full border text-sm transition-colors",
+                    "px-4 py-2 rounded-full border text-sm transition-colors font-bold",
                     startTime && getIdx(startTime) === getIdx(h)
                       ? "bg-orange-500 text-white border-orange-500"
                       : "bg-white hover:bg-orange-300 border-gray-300",
@@ -269,7 +293,7 @@ export default function DateTimeModal({ onClose }: Props) {
           </div>
 
           <button
-            className="px-2 py-1 rounded hover:bg-orange-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0 transition-colors"
+            className="px-2 py-1 rounded hover:scale-110 font-extrabold disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0 transition-colors"
             onClick={() => setStartPage((p) => Math.min(maxPage, p + 1))}
             aria-label="다음 6개"
             disabled={startPage === maxPage}
@@ -282,7 +306,7 @@ export default function DateTimeModal({ onClose }: Props) {
         <div className="text-left justify-start text-검정 text-xl ml-11 mt-5 pl-3 bg-white mr-11 font-semibold font-['Pretendard'] leading-7">도착 시간대 선택</div>
         <div className="flex items-center gap-2 mb-4 ml-11 mr-11 pb-3 pt-3 bg-white">
           <button
-            className={`px-2 py-1 rounded hover:bg-orange-300 ${!startTime ? "opacity-40 cursor-not-allowed" : ""} disabled:hover:bg-transparent transition-colors shrink-0`}
+            className={`px-2 py-1 rounded hover:scale-110 font-extrabold ${!startTime ? "opacity-40 cursor-not-allowed" : ""} disabled:hover:bg-transparent transition-colors shrink-0`}
             onClick={() => startTime && setEndPage((p) => Math.max(0, p - 1))}
             aria-label="이전 6개"
             disabled={!startTime || endPage === 0}
@@ -308,7 +332,7 @@ export default function DateTimeModal({ onClose }: Props) {
                       if (page !== endPage) setEndPage(page);
                     }}
                     className={[
-                      "px-4 py-2 rounded-full border text-sm transition-colors",
+                      "px-4 py-2 rounded-full border text-sm transition-colors font-bold",
                       disabled
                         ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed disabled:hover:bg-transparent"
                         : endTime && getIdx(endTime) === getIdx(h)
@@ -326,7 +350,7 @@ export default function DateTimeModal({ onClose }: Props) {
           </div>
 
           <button
-            className={`px-2 py-1 rounded hover:bg-orange-300 ${!startTime ? "opacity-40 cursor-not-allowed" : ""} disabled:hover:bg-transparent transition-colors shrink-0`}
+            className={`px-2 py-1 rounded hover:scale-110 font-extrabold ${!startTime ? "opacity-40 cursor-not-allowed" : ""} disabled:hover:bg-transparent transition-colors shrink-0`}
             onClick={() => startTime && setEndPage((p) => Math.min(maxPage, p + 1))}
             aria-label="다음 6개"
             disabled={!startTime || endPage === maxPage}
