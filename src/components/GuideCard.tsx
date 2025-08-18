@@ -1,4 +1,5 @@
 import { HTMLAttributes, useState } from "react";
+import GuideDetailModal from "./GuideDetailModal";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   number: number; // 몇 번째 코스인지
@@ -39,6 +40,13 @@ const Card = ({ number, course, ...props }: CardProps) => {
           다운로드
         </button>
       </div>
+
+      {isGuideModalOpen && (
+        <GuideDetailModal
+          open={isGuideModalOpen}
+          onClose={() => setIsGuideModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
