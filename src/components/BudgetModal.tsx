@@ -49,9 +49,9 @@ export default function BudgetModal({ open, onClose }: Props) {
         className="flex flex-col justify-center items-center rounded-2xl bg-neutral-100 w-[632px] p-10 gap-[15px] shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col justify-center items-center w-full gap-6">
+        <div className="flex flex-col justify-center items-center w-full">
           {/* 헤더 */}
-          <div className="flex items-center justify-between w-full text-2xl">
+          <div className="flex items-center justify-between w-full text-2xl mb-6">
             <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">
               예산
             </div>
@@ -65,7 +65,7 @@ export default function BudgetModal({ open, onClose }: Props) {
           </div>
 
           {/* 안내 배너 및 예산 입력란 */}
-          <div>
+          <div className="mb-6">
             <div className="mt-3 rounded-xl py-2 text-center text-base text-[#FE7600] font-semibold font-['Pretendard']">
               나들이 갈 때 인당 예산을 입력해 주세요
             </div>

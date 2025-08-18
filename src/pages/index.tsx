@@ -67,7 +67,7 @@ export default function TripFilter() {
     <>
       {/* 캐러셀 */}
       <div className="w-full">
-        <div className="w-full max-w-[1120px] mx-auto mb-6">
+        <div className="w-full mx-auto">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation
@@ -78,44 +78,44 @@ export default function TripFilter() {
           >
             <SwiperSlide>
               <img
-                src="/banner1.jpg"
+                src="/bg1.svg"
                 alt="배너1"
-                className="w-full h-64 object-cover"
+                className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
                 src="/banner2.jpg"
                 alt="배너2"
-                className="w-full h-64 object-cover"
+                className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
                 src="/banner3.jpg"
                 alt="배너3"
-                className="w-full h-64 object-cover"
+                className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
                 src="/banner3.jpg"
                 alt="배너3"
-                className="w-full h-64 object-cover"
+                className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
                 src="/banner3.jpg"
                 alt="배너3"
-                className="w-full h-64 object-cover"
+                className="w-full h-auto object-cover"
               />
             </SwiperSlide>
           </Swiper>
         </div>
 
         {/* 본문 */}
-        <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto">
+        <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto -mt-30 relative z-10">
           {/* 다음 우편번호 API 스크립트 */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
@@ -148,7 +148,7 @@ export default function TripFilter() {
               >
                 <div className="text-center justify-start">
                   <span className="text-검정 text-2xl font-semibold font-['Pretendard']">{date ? `${date} (${weekday})`: "미정"}<br/></span>
-                <span className="text-검정 text-xl font-semibold font-['Pretendard']">{startTime || ""}-{endTime || ""} / {guideType || ""}</span>
+                <span className="text-검정 text-xl font-semibold font-['Pretendard']">{startTime || ""}{endTime || ""}{guideType || ""}</span>
                 </div>
               </div>
             </div>
@@ -159,32 +159,40 @@ export default function TripFilter() {
             )}
 
             {/* 인원수 */}
-            <div className="select-none">
-              <p className="text-sm text-gray-500">인원수</p>
-              <div className="mt-1 flex items-center justify-center gap-3">
-                <button
-                  onClick={() => setPeople(Math.max(0, people - 1))}
-                  disabled={people === 0}
-                  className={`w-7 h-7 rounded-full active:scale-95 ${
-                    people === 0 ? "text-gray-300" : "hover:bg-gray-50 "
-                  }`}
-                  aria-label="감소"
-                >
-                  −
-                </button>
-                <span className="text-2xl font-extrabold">{people}</span>
-                <button
-                  onClick={() => setPeople(Math.min(9, people + 1))}
-                  disabled={people === 9}
-                  className={`w-7 h-7 rounded-full active:scale-95 ${
-                    people === 9 ? "text-gray-300" : "hover:bg-gray-50 "
-                  }`}
-                  aria-label="증가"
-                >
-                  +
-                </button>
+              <div className="select-none">
+                <p className="self-stretch text-center justify-start text-검정 text-xl font-normal font-['Pretendard'] leading-7">인원수</p>                <div className="mt-1 flex items-center justify-center gap-3">
+                  {/* - 버튼 */}
+                  <button
+                    onClick={() => setPeople(Math.max(0, people - 1))}
+                    disabled={people === 0}
+                    className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
+                      people === 0
+                        ? "bg-[#C2C2C2] text-white cursor-not-allowed"
+                        : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
+                    }`}
+                    aria-label="감소"
+                  >
+                    −
+                  </button>
+
+                  <span className="text-2xl font-extrabold px-1">{people}</span>
+
+                  {/* + 버튼 */}
+                  <button
+                    onClick={() => setPeople(Math.min(9, people + 1))}
+                    disabled={people === 9}
+                    className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
+                      people === 9
+                        ? "bg-[#C2C2C2] text-white cursor-not-allowed"
+                        : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
+                    }`}
+                    aria-label="증가"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-            </div>
+
 
             {/* 이동수단 */}
             <div className="cursor-pointer select-none">
