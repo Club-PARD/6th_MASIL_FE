@@ -1,19 +1,20 @@
 import Card from "@/components/GuideCard";
 import Image from "next/image";
 import {
-  useBudgetState,
-  useMoveState,
-  usePeopleState,
-  useThemeState,
+  useBudgetStore,
+  useMoveStore,
+  usePeopleStore,
+  useThemeStore,
   useTripStore,
+  useOriginStore,
 } from "@/stores/useTripStore";
 
 export default function GuidePage() {
   const { date, startTime, endTime, guideType } = useTripStore();
-  const { people, setPeople } = usePeopleState();
-  const { car } = useMoveState();
-  const { budget } = useBudgetState();
-  const { theme } = useThemeState();
+  const { people, setPeople } = usePeopleStore();
+  const { car } = useMoveStore();
+  const { budget } = useBudgetStore();
+  const { theme } = useThemeStore();
 
   return (
     <div className="flex flex-col items-center min-h-lvh bg-[#F6F6F6] p-[41px] gap-[35px]">

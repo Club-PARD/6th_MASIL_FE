@@ -17,10 +17,10 @@ import styles from "../styles/index.module.css";
 // 전역 상태(Zustand)
 import {
   useTripStore,
-  useMoveState,
-  useBudgetState,
-  useThemeState,
-  usePeopleState,
+  useMoveStore,
+  useBudgetStore,
+  useThemeStore,
+  usePeopleStore,
 } from "@/stores/useTripStore";
 
 // 모달
@@ -50,14 +50,13 @@ import axios from "axios";
 
 // ---------- 컴포넌트 ----------
 export default function TripFilter() {
-  const [origin, setOrigin] = useState("");
-
   // zustand 값
+  const [origin, setOrigin] = useState("");
   const { date, startTime, endTime, guideType } = useTripStore();
-  const { people, setPeople } = usePeopleState();
-  const { car } = useMoveState();
-  const { budget } = useBudgetState();
-  const { theme } = useThemeState();
+  const { people, setPeople } = usePeopleStore();
+  const { car } = useMoveStore();
+  const { budget } = useBudgetStore();
+  const { theme } = useThemeStore();
 
   // 모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false);

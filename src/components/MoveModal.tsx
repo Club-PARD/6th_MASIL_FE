@@ -13,7 +13,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { useMoveState } from "@/stores/useTripStore";
+import { useMoveStore } from "@/stores/useTripStore";
 
 type Props = {
   open: boolean;
@@ -27,7 +27,7 @@ const CARDS: { value: "자차" | "대중교통" | "도보"; label: string; img: 
 ];
 
 export default function MoveModal({ open, onClose }: Props) {
-  const { car, setCar } = useMoveState();
+  const { car, setCar } = useMoveStore();
 
   useEffect(() => {
     if (!open) return;
