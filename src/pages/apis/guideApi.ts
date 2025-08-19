@@ -55,6 +55,7 @@ export const guideApi = {
           timeout: 10000, // 10초
         }
       );
+
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
