@@ -47,6 +47,9 @@ export default function GuideDetailModal({
   const [isCancelHover, setIsCancelHover] = useState(false);
   const [isDownloadHover, setIsDownloadHover] = useState(false);
 
+  const [items, setItems] = useState<ItemDto[]>([]);
+  const [loading, setLoading] = useState(false);
+
   //   ESC 키로 모달 닫기
   useEffect(() => {
     if (!open) return;

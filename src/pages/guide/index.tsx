@@ -1,5 +1,7 @@
 import Card from "@/components/GuideCard";
 import Image from "next/image";
+import reset_orange from "@/assets/icons/reset_orange.svg";
+
 import {
   useOriginStore,
   useBudgetStore,
@@ -78,7 +80,13 @@ export default function GuidePage() {
         />
 
         {/* 다시 추천해주세요 버튼 */}
-        <button>다시 추천해 주세요</button>
+        <button
+          className="flex items-center justify-center h-14 px-[25px] py-5 bg-white rounded-[5px] shadow-sm text-[#282828] text-xl font-semibold font-['Pretendard'] gap-[8px] hover:bg-neutral-100"
+          // onClick={}
+        >
+          <Image src={reset_orange} alt="reset" width={21} height={21} />
+          다시 추천해 주세요
+        </button>
       </div>
     </div>
   );
