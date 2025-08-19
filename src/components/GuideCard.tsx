@@ -3,7 +3,7 @@ import GuideDetailModal from "./GuideDetailModal";
 
 type ItemDto = {
   title: string;
-  orderNum: number;
+  order_num: number;
 };
 
 type CardProps = {
@@ -23,21 +23,32 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
 
   return (
     <div
-      className="flex flex-row w-[1121px] h-[130px] px-[72px] py-[29px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-between text-[#282828] hover:text-[#FE7600]"
+      className="flex flex-row w-[1121px] px-[40px] py-[20px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-center text-[#282828] hover:text-[#FE7600] shadow-2xl"
       onClick={handleOpen}
     >
-      <div className="text-3xl text-3xl font-normal font-['Jalnan_2']">
-        마실코스 {order}
+      <div className="flex-shrink-0 min-w-[180px]">
+        <div className="text-3xl font-normal font-['Jalnan_2']">
+          마실코스 {order}
+        </div>
       </div>
-      <div className="flex flex-row space-x-2">
-        {itemDtos.map((item, index) => (
-          <div key={index} className="text-[#282828] text-2xl space-x-2">
-            <span>{item.title}</span>
-            {index !== itemDtos.length - 1 && <span>→</span>}
-          </div>
-        ))}
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          {itemDtos.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center text-[#282828] text-2xl space-x-2"
+            >
+              <span className="truncate max-w-[150px]" title={item.title}>
+                {item.title}
+              </span>
+              {index !== itemDtos.length - 1 && (
+                <span className="ml-2 flex-shrink-0">→</span>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="flex flex-col gap-[7px]">
+      <div className="flex flex-col gap-[7px] flex-shrink-0">
         <button
           className="px-[15px] py-2.5 bg-neutral-100 rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
           onClick={(e) => {

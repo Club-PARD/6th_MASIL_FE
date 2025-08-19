@@ -130,7 +130,7 @@ export default function GuideDetailModal({
           </div>
 
           {/* 사용자 정보 카드 */}
-          <div className="flex flex-col items-center justify-center w-full h-[200px] rounded-2xl bg-neutral-100 px-[91px] py-[30px] gap-[40px] text-[#282828] text-xl font-normal font-['Pretendard']">
+          <div className="flex flex-col items-center justify-center w-full rounded-2xl bg-neutral-100 px-4 md:px-[91px] py-[30px] gap-[10px] text-[#282828] text-lg md:text-xl font-normal font-['Pretendard'] flex-shrink-0">
             <div className="flex flex-col items-center justify-center gap-[8px]">
               <p>출발지</p>
               <p className="text-3xl font-semibold">{origin}</p>
@@ -139,10 +139,10 @@ export default function GuideDetailModal({
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>출발일</p>
                 <div className="flex flex-col items-center justify-center font-semibold">
-                  <p className="text-2xl">{date}</p>
-                  <p className="text-xl">
-                    {startTime}-{endTime} / {guideType}
-                  </p>
+                  <div className="text-2xl">{date}</div>
+                  <div className="text-xl">
+                    {startTime}{endTime}{guideType}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
