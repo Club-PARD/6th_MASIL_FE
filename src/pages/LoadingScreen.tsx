@@ -3,23 +3,24 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 export default function LoadingScreen() {
-  const INTERVAL_MS = 1200;
+  const INTERVAL_MS = 200; // 빠르게
 
-  // 여기에 실제 파일명 배열을 넣으세요
   const images = useMemo(
-    () =>
-      Array.from({ length: 12 }, (_, i) => `/stopbgg${i + 1}.svg`),
+    () => Array.from({ length: 7 }, (_, i) => `/stbg${i + 1}.svg`),
     []
   );
 
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
+    if (images.length === 0) return;
     const t = setInterval(() => {
       setIdx((p) => (p + 1) % images.length);
     }, INTERVAL_MS);
     return () => clearInterval(t);
-  }, [images.length]);
+  }, [images.length, INTERVAL_MS]);
+
+  if (images.length === 0) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-white">
@@ -37,12 +38,12 @@ export default function LoadingScreen() {
 
       {/* 중앙 영역 */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative w-[min(90vw,800px)] aspect-[3/2]">
-          {/* 겹쳐놓고 opacity로 페이드 */}
+        {/* ✅ 여기 크기를 키움 */}
+        <div className="relative w-[min(95vw,1000px)] aspect-[16/9]">
           {images.map((src, i) => (
             <div
               key={src}
-              className={`absolute inset-0 transition-opacity duration-700`}
+              className="absolute inset-0"
               style={{ opacity: i === idx ? 1 : 0 }}
               aria-hidden={i === idx ? "false" : "true"}
             >
@@ -51,7 +52,6 @@ export default function LoadingScreen() {
                 alt={`로딩 이미지 ${i + 1}`}
                 fill
                 className="object-contain"
-                // 현재 것만 priority 주기 (첫 진입시 빠른 로드)
                 priority={i === idx}
               />
             </div>
