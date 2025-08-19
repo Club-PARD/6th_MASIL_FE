@@ -203,7 +203,7 @@ export default function TripFilter() {
           />
         </div>
         {/* 본문 */}
-        <section className="w-[1120px] h-96 bg-white rounded-2xl p-8 mx-auto -mt-30 relative z-10">
+        <section className="flex flex-col items-center justify-center w-[1120px] h-96 bg-white rounded-2xl px-[91px] mx-auto -mt-30 relative z-10 shadow-2xl">
           {/* 다음 우편번호 API */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
@@ -355,14 +355,14 @@ export default function TripFilter() {
           )}
 
           {/* 버튼 */}
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center w-full mt-8">
             <button
               onClick={handleSubmit}
               disabled={!isFormValid || submitting}
-              className={`px-7 py-4 rounded-[5px] inline-flex justify-center items-center gap-2.5 transition
+              className={`w-full px-7 py-4 rounded-[10px] inline-flex justify-center items-center gap-2.5 transition
                 ${
                   !isFormValid || submitting
-                    ? "bg-stone-300 cursor-not-allowed"
+                    ? "bg-[#C2C2C2] cursor-not-allowed"
                     : "bg-orange-500 hover:bg-orange-600"
                 }
               `}
