@@ -10,6 +10,7 @@ import {
   useThemeStore,
   useTripStore,
 } from "@/stores/useTripStore";
+import { useGuideStore } from "@/stores/useGuideStore";
 
 export default function GuidePage() {
   const { origin } = useOriginStore();
@@ -18,6 +19,7 @@ export default function GuidePage() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
+  const { guideResults } = useGuideStore();
 
   return (
     <div className="flex flex-col items-center w-full min-h-lvh bg-[#F6F6F6] gap-[35px]">
@@ -69,15 +71,13 @@ export default function GuidePage() {
         </div>
 
         {/* 가이드 카드 */}
-        <Card
-          planId={1}
-          order={0 + 1}
-          itemDtos={[
-            { title: "서울", orderNum: 0 },
-            { title: "부산", orderNum: 1 },
-            { title: "포항", orderNum: 2 },
-          ]}
-        />
+        {guideResults.map((plan, index) => (
+          <Card
+            planId={plan.planId}
+            order={plan.order + 1}
+            itemDtos={plan.itemDtos}
+          />
+        ))}
 
         {/* 다시 추천해주세요 버튼 */}
         <button

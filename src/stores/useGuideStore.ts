@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-type GuidePlan = {
+export type GuidePlan = {
   order: number;
   planId: number;
   itemDtos: GuideDetailItem[];
 };
 
-type GuideDetailItem = { 
+export type GuideDetailItem = {
   title: string;
   orderNum: number;
   duration?: string;
@@ -18,7 +18,7 @@ type GuideDetailItem = {
   description?: string;
 };
 
-type GuideState = {
+export type GuideState = {
   guideResults: GuidePlan[];
   selectedPlanId: number | null;
   guideDetail: GuideDetailItem[] | null;
@@ -34,12 +34,14 @@ type GuideState = {
 };
 
 export const useGuideStore = create<GuideState>((set) => ({
+  // 초기값
   guideResults: [],
   selectedPlanId: null,
   guideDetail: null,
   isLoading: false,
   error: null,
 
+  // 액션
   setGuideResults: (results) =>
     set({
       guideResults: Array.isArray(results) ? results : [],
