@@ -156,7 +156,7 @@ export default function TripFilter() {
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop
-            className={`${styles.swiper} rounded-2xl overflow-hidden`}
+            className={`${styles.swiper} overflow-hidden`}
           >
             <SwiperSlide>
               <img
