@@ -1,25 +1,26 @@
 import { create } from "zustand";
 
 export type GuidePlan = {
-  order: number;
-  planId: number;
-  itemDtos: GuideDetailItem[];
+  order: number | null;
+  planId: number | null;
+  itemDtos: GuideDetailItem[] | null;
 };
 
 export type GuideDetailItem = {
   title: string;
   order_num: number;
-  duration?: string;
-  start_time?: string;
-  end_time?: string;
-  cost?: number;
-  transport?: boolean;
-  link_url?: string;
-  description?: string;
+  duration?: string | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  cost?: number | null;
+  transport?: boolean | null;
+  link_url?: string | null;
+  description?: string | null;
+  place_name?: string | null;
 };
 
 export type GuideState = {
-  guideResults: GuidePlan[];
+  guideResults: GuidePlan[] | null;
   guideDetail: GuideDetailItem[] | null;
   isLoading: boolean;
   error: string | null;

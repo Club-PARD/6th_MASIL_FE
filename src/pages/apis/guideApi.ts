@@ -38,6 +38,7 @@ export interface GuideDetailResponse {
     transport?: boolean;
     link_url?: string;
     description?: string;
+    place_name?: string;
   }[];
 }
 
