@@ -52,7 +52,7 @@ export default function BudgetModal({ open, onClose }: Props) {
         <div className="flex flex-col justify-center items-center w-full">
           {/* 헤더 */}
           <div className="flex items-center justify-between w-full text-2xl mb-6">
-            <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">
+            <div className="text-[#282828] text-2xl font-semibold">
               예산
             </div>
             <button
@@ -66,7 +66,7 @@ export default function BudgetModal({ open, onClose }: Props) {
 
           {/* 안내 배너 및 예산 입력란 */}
           <div className="mb-6">
-            <div className="mt-3 rounded-xl py-2 text-center text-base text-[#FE7600] font-semibold font-['Pretendard']">
+            <div className="mt-3 rounded-xl py-2 text-center text-base text-[#FE7600] font-semibold">
               나들이 갈 때 인당 예산을 입력해 주세요
             </div>
 
@@ -84,7 +84,7 @@ export default function BudgetModal({ open, onClose }: Props) {
                 >
                   −
                 </button>
-                <span className="w-22 text-[#282828] text-3xl font-semibold font-['Pretendard']">
+                <span className="w-22 text-[#282828] text-3xl font-semibold">
                   {tempBudget}만원
                 </span>
                 <button

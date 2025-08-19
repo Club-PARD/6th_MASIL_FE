@@ -7,9 +7,9 @@ type ItemDto = {
 };
 
 type CardProps = {
-  planId: number; // 가이드 ID
-  order: number; // 몇 번째 코스인지
-  itemDtos: ItemDto[]; // 코스
+  planId: number | null; // 가이드 ID
+  order: number | null; // 몇 번째 코스인지
+  itemDtos: ItemDto[] | null; // 코스
 };
 
 const Card = ({ planId, order, itemDtos }: CardProps) => {
@@ -23,17 +23,17 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
 
   return (
     <div
-      className="flex flex-row w-[1121px] px-[40px] py-[20px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-center text-[#282828] hover:text-[#FE7600] shadow-2xl"
+      className="flex flex-row w-[1121px] px-[40px] py-[20px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-center text-[#282828] hover:text-[#FE7600] shadow-lg"
       onClick={handleOpen}
     >
       <div className="flex-shrink-0 min-w-[180px]">
-        <div className="text-3xl font-normal font-['Jalnan_2']">
+        <div className="text-3xl font-normal" style={{ fontFamily: 'yg-jalnan, sans-serif' }}>
           마실코스 {order}
         </div>
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          {itemDtos.map((item, index) => (
+          {itemDtos?.map((item, index) => (
             <div
               key={index}
               className="flex items-center text-[#282828] text-2xl space-x-2"
