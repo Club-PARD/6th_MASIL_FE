@@ -8,13 +8,13 @@ export type GuidePlan = {
 
 export type GuideDetailItem = {
   title: string;
-  orderNum: number;
+  order_num: number;
   duration?: string;
-  startTime?: string;
-  endTime?: string;
+  start_time?: string;
+  end_time?: string;
   cost?: number;
-  isTransportation?: boolean;
-  linkUrl?: string;
+  transport?: boolean;
+  link_url?: string;
   description?: string;
 };
 

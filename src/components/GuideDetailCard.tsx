@@ -11,16 +11,16 @@ export default function GuideDetailCard({ item }: GuideDetailCardProps) {
   return (
     <div className="flex flex-row items-center justify-center w-full px-[37px] gap-[80px] text-[30px] text-[#282828] font-semibold">
       {/* 시간대 */}
-      {item.startTime && (
+      {item.start_time && (
         <div className="flex justify-start w-[80px] h-full">
-          {item.startTime}
+          {item.start_time}
         </div>
       )}
 
       <div className="flex flex-col w-full h-full border-l-3 border-[#C2C2C2] px-[15px] font-semibold}">
         {/* 장소 */}
         {item.title && (
-          <div className={`${item.isTransportation ? "" : "text-[#FE7600]"}`}>{item.title}</div>
+          <div className={`${item.transport ? "" : "text-[#FE7600]"}`}>{item.title}</div>
         )}
 
         {/* 소요시간과 가격 */}
@@ -40,19 +40,19 @@ export default function GuideDetailCard({ item }: GuideDetailCardProps) {
         )}
 
         {/* 설명과 링크 */}
-        {(item.description || item.linkUrl) && (
+        {(item.description || item.link_url) && (
           <div className="flex flex-col text-[24px] font-normal gap-[10px]">
             {item.description && <div>{item.description}</div>}
-            {item.linkUrl && (
+            {item.link_url && (
               <div className="flex flex-row items-center underline">
                 <Image src={pin_neutral} alt="pin" width={28} height={28} />
                 <a
-                  href={item.linkUrl}
+                  href={item.link_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="ml-2"
                 >
-                  {item.linkUrl}
+                  {item.link_url}
                 </a>
               </div>
             )}

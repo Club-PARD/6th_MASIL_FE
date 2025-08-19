@@ -4,6 +4,8 @@
 import { useState } from "react";
 import Script from "next/script";
 
+import { useRouter } from "next/router"; "next/router";
+
 // ✅ Swiper 컴포넌트/모듈 임포트
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -55,6 +57,8 @@ const buildTimeTable = (start?: string, end?: string) => {
 
 // ---------- 컴포넌트 ----------
 export default function TripFilter() {
+  const router = useRouter();
+
   // zustand 값
   const { origin, setOrigin } = useOriginStore();
   const { date, startTime, endTime, guideType } = useTripStore();
@@ -122,12 +126,14 @@ export default function TripFilter() {
       };
 
       const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/plan";
+
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
       // 전역 상태 관리에 저장
       setGuideResults(res.data.responsePlanDtos);
 
-      alert("가이드 요청이 접수되었습니다!");
+      //alert밑에
+      router.push("/guide");
       console.log("✅ 응답:", res.data);
     } catch (err: any) {
       console.error("❌ handleSubmit error:", err);
