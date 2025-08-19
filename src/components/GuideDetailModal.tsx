@@ -9,31 +9,26 @@ import {
   useThemeStore,
   useTripStore,
 } from "@/stores/useTripStore";
+import { useGuideStore } from "@/stores/useGuideStore";
+import { guideApi } from "@/pages/apis/guideApi";
 
 import Image from "next/image";
 import cancel_neutral from "@/assets/icons/cancel_neutral.svg";
 import cancel_black from "@/assets/icons/cancel_black.svg";
 import download_white from "@/assets/icons/download_white.svg";
 import download_orange from "@/assets/icons/download_orange.svg";
-import pin_neutral from "@/assets/icons/pin_neutral.svg";
+import GuideDetailCard from "./GuideDetailCard";
 
 type GuideDetailProps = {
   planId: number;
+  order: number;
   open: boolean;
   onClose: () => void;
 };
 
-type ItemDto = {
-  title: string;
-  orderNum: number;
-  duration: string;
-  startTime: string;
-  endTime: string;
-  isTransport: boolean;
-};
-
 export default function GuideDetailModal({
   planId,
+  order,
   open,
   onClose,
 }: GuideDetailProps) {
@@ -43,12 +38,10 @@ export default function GuideDetailModal({
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
+  const { guideDetail, setGuideDetail, setLoading, setError } = useGuideStore();
 
   const [isCancelHover, setIsCancelHover] = useState(false);
   const [isDownloadHover, setIsDownloadHover] = useState(false);
-
-  const [items, setItems] = useState<ItemDto[]>([]);
-  const [loading, setLoading] = useState(false);
 
   //   ESC 키로 모달 닫기
   useEffect(() => {
@@ -63,6 +56,57 @@ export default function GuideDetailModal({
   //   모달 닫혀 있을 시 렌더링 X
   if (!open) return null;
 
+  //   Detail GET API 호출
+  const getGuideDetail = async () => {
+    setLoading(true);
+    try {
+        const data = await guideApi.getGuideDetail(planId);
+
+      //   test
+    //   const data = {
+    //     itemDtos: [
+    //       {
+    //         title: "아침 식사",
+    //         orderNum: 1,
+    //         duration: "60분",
+    //         startTime: "00:00",
+    //         endTime: "00:00",
+    //       },
+    //       {
+    //         title: "지하철 이동",
+    //         orderNum: 2,
+    //         duration: "20분",
+    //         startTime: "00:00",
+    //         endTime: "00:00",
+    //         cost: 1400,
+    //         isTransportation: true,
+    //       },
+    //       {
+    //         title: "박물관 관람",
+    //         orderNum: 3,
+    //         duration: "60분",
+    //         startTime: "00:00",
+    //         endTime: "00:00",
+    //         cost: 15000,
+    //         linkUrl: "https://example.com/museum",
+    //         description: "현대미술 전시",
+    //       },
+    //     ],
+    //   };
+      setGuideDetail(data.itemDtos); // 전역 상태 관리 GuideStore에 저장
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!open) return;
+
+    getGuideDetail();
+  }, [open, planId, setGuideDetail, setLoading, setError]);
+
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center cursor-default bg-black/40 gap-[22px]"
@@ -75,12 +119,12 @@ export default function GuideDetailModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* 모달 내부 */}
-        <div className="flex flex-col justify-start items-center w-[1083px] h-[700px] p-[50px] rounded-2xl bg-white text-[#282828] gap-[15px] shadow-xl">
+        <div className="flex flex-col justify-start items-center w-[1083px] h-[700px] p-[50px] rounded-2xl bg-white text-[#282828] gap-[15px] shadow-xl overflow-y-auto">
           {/* 헤더 */}
           <div className="flex flex-row items-center justify-center w-full gap-[56px]">
             <hr className="w-[40%] h-4 bg-[#FE7600] border-0 rounded-l-full" />
             <div className="flex items-center justify-center w-[20%] text-3xl font-bold font-['Jalnan_2']">
-              마실코스 1
+              마실 코스 {order}
             </div>
             <hr className="w-[40%] h-4 bg-[#FE7600] border-0 rounded-r-full" />
           </div>
@@ -121,32 +165,10 @@ export default function GuideDetailModal({
           </div>
 
           {/* 상세 가이드 */}
-          <div className="flex flex-col items-center justify-center w-full">
-            <div className="flex flex-row items-center justify-center w-full p-[37px] gap-[80px] text-[30px] text-[#282828] font-semibold">
-              {/* 시간대 */}
-              <div className="flex justify-start w-[80px] h-full">time</div>
-              <div className="flex flex-col w-full h-full border-l-3 border-[#C2C2C2] px-[15px]">
-                {/* 장소 */}
-                <div className={`${"text-[#FE7600]"}`}>
-                  title 장소면 오렌지 아니면 검정
-                </div>
-                {/* 소요시간과 가격 */}
-                <div className="flex flex-row w-full justify-start pb-[19px] gap-[10px]">
-                  <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
-                    소요 시간 null 이면 X
-                  </div>
-                  <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
-                    가격 null 이면 X
-                  </div>
-                </div>
-                {/* 설명과 링크 */}
-                <div className="flex flex-col text-[24px] font-normal gap-[10px]">
-                  <div>설명</div>
-                  <div className="flex flex-row items-center underline">
-                    <Image src={pin_neutral} alt="pin" width={28} height={28} /> 링크</div>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col items-center justify-center bg-pink w-full my-[50px] gap-[30px]">
+            {guideDetail?.map((place, index) => (
+              <GuideDetailCard key={index} item={place} />
+            ))}
           </div>
         </div>
 
@@ -174,9 +196,10 @@ export default function GuideDetailModal({
           >
             <Image
               src={isDownloadHover ? download_orange : download_white}
-              alt="x"
+              alt="download"
               width={24}
               height={24}
+              onClick={() => {}}
             />
             다운로드
           </button>

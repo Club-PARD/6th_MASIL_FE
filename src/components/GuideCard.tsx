@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from "react";
+import { useState } from "react";
 import GuideDetailModal from "./GuideDetailModal";
 
 type ItemDto = {
@@ -61,6 +61,7 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
       {isGuideModalOpen && (
         <GuideDetailModal
           planId={planId}
+          order={order}
           open={isGuideModalOpen}
           onClose={() => setIsGuideModalOpen(false)}
         />

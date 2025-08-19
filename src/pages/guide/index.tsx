@@ -10,6 +10,10 @@ import {
   useThemeStore,
   useTripStore,
 } from "@/stores/useTripStore";
+import { useGuideStore } from "@/stores/useGuideStore";
+
+// test
+// import { useEffect } from "react";
 
 export default function GuidePage() {
   const { origin } = useOriginStore();
@@ -18,6 +22,36 @@ export default function GuidePage() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
+  const { guideResults } = useGuideStore();
+
+  // test
+  // const { setGuideResults } = useGuideStore();
+
+  // useEffect(() => {
+  //   const res = {
+  //     responsePlanDtos: [
+  //       {
+  //         order: 0,
+  //         planId: 1,
+  //         itemDtos: [
+  //           { title: "Plan1-Item1", orderNum: 0 },
+  //           { title: "Plan1-Item2", orderNum: 1 },
+  //           { title: "Plan1-Item3", orderNum: 2 },
+  //         ],
+  //       },
+  //       {
+  //         order: 1,
+  //         planId: 2,
+  //         itemDtos: [
+  //           { title: "Plan2-Item1", orderNum: 0 },
+  //           { title: "Plan2-Item2", orderNum: 1 },
+  //           { title: "Plan2-Item3", orderNum: 2 },
+  //         ],
+  //       },
+  //     ],
+  //   };
+  //   setGuideResults(res.responsePlanDtos);
+  // }, []);
 
   return (
     <div className="flex flex-col items-center w-full min-h-lvh bg-[#F6F6F6] gap-[35px]">
@@ -69,15 +103,13 @@ export default function GuidePage() {
         </div>
 
         {/* 가이드 카드 */}
-        <Card
-          planId={1}
-          order={0 + 1}
-          itemDtos={[
-            { title: "서울", orderNum: 0 },
-            { title: "부산", orderNum: 1 },
-            { title: "포항", orderNum: 2 },
-          ]}
-        />
+        {guideResults.map((plan, index) => (
+          <Card
+            planId={plan.planId}
+            order={plan.order + 1}
+            itemDtos={plan.itemDtos}
+          />
+        ))}
 
         {/* 다시 추천해주세요 버튼 */}
         <button

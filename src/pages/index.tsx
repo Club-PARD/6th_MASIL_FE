@@ -118,9 +118,10 @@ export default function TripFilter() {
         isOneWay, // boolean (true=편도, false=왕복)
       };
 
-      const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/trips"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
+      const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
+      // 전역 상태 관리에 저장
       setGuideResults(res.data.responsePlanDtos);
       
       alert("가이드 요청이 접수되었습니다!");
@@ -146,7 +147,7 @@ export default function TripFilter() {
     (budget ?? 0) > 0;
 
   return (
-    <>
+    <div className="w-full min-h-lvh bg-neutral-100">
       {/* 캐러셀 */}
       <div className="w-full">
         <div className="w-full mx-auto relative">
@@ -156,7 +157,7 @@ export default function TripFilter() {
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop
-            className={`${styles.swiper} rounded-2xl overflow-hidden`}
+            className={`${styles.swiper} overflow-hidden`}
           >
             <SwiperSlide>
               <img
@@ -203,7 +204,7 @@ export default function TripFilter() {
           />
         </div>
         {/* 본문 */}
-        <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto -mt-30 relative z-10">
+        <section className="flex flex-col items-center justify-center w-[1120px] h-96 bg-white rounded-2xl px-[91px] mx-auto -mt-30 relative z-10 shadow-2xl">
           {/* 다음 우편번호 API */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
@@ -355,14 +356,14 @@ export default function TripFilter() {
           )}
 
           {/* 버튼 */}
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center w-full mt-8">
             <button
               onClick={handleSubmit}
               disabled={!isFormValid || submitting}
-              className={`px-7 py-4 rounded-[5px] inline-flex justify-center items-center gap-2.5 transition
+              className={`w-full px-7 py-4 rounded-[10px] inline-flex justify-center items-center gap-2.5 transition
                 ${
                   !isFormValid || submitting
-                    ? "bg-stone-300 cursor-not-allowed"
+                    ? "bg-[#C2C2C2] cursor-not-allowed"
                     : "bg-orange-500 hover:bg-orange-600"
                 }
               `}
@@ -386,6 +387,6 @@ export default function TripFilter() {
           )}
         </section>
       </div>
-    </>
+    </div>
   );
 }
