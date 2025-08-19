@@ -30,6 +30,7 @@ import DateTimeModal from "@/components/DateTimeModal";
 import MoveModal from "@/components/MoveModal";
 import ThemeModal from "@/components/ThemeModal";
 import BudgetModal from "@/components/BudgetModal";
+import LoadingScreen from "@/components/stop";
 
 import axios from "axios";
 import Image from "next/image";
@@ -371,6 +372,15 @@ export default function TripFilter() {
               </span>
             </button>
           </div>
+
+          {errorMsg && (
+            <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
+          )}
+
+          {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
+       
+            {submitting && <stop />}
+          }
           {errorMsg && (
             <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
           )}
