@@ -12,6 +12,9 @@ import {
 } from "@/stores/useTripStore";
 import { useGuideStore } from "@/stores/useGuideStore";
 
+// test
+// import { useEffect } from "react";
+
 export default function GuidePage() {
   const { origin } = useOriginStore();
   const { date, startTime, endTime, guideType } = useTripStore();
@@ -20,6 +23,35 @@ export default function GuidePage() {
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
   const { guideResults } = useGuideStore();
+
+  // test
+  // const { setGuideResults } = useGuideStore();
+
+  // useEffect(() => {
+  //   const res = {
+  //     responsePlanDtos: [
+  //       {
+  //         order: 0,
+  //         planId: 1,
+  //         itemDtos: [
+  //           { title: "Plan1-Item1", orderNum: 0 },
+  //           { title: "Plan1-Item2", orderNum: 1 },
+  //           { title: "Plan1-Item3", orderNum: 2 },
+  //         ],
+  //       },
+  //       {
+  //         order: 1,
+  //         planId: 2,
+  //         itemDtos: [
+  //           { title: "Plan2-Item1", orderNum: 0 },
+  //           { title: "Plan2-Item2", orderNum: 1 },
+  //           { title: "Plan2-Item3", orderNum: 2 },
+  //         ],
+  //       },
+  //     ],
+  //   };
+  //   setGuideResults(res.responsePlanDtos);
+  // }, []);
 
   return (
     <div className="flex flex-col items-center w-full min-h-lvh bg-[#F6F6F6] gap-[35px]">

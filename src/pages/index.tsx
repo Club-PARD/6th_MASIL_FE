@@ -117,7 +117,7 @@ export default function TripFilter() {
         isOneWay, // boolean (true=편도, false=왕복)
       };
 
-      const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/trips"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
+      const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
       // 전역 상태 관리에 저장
