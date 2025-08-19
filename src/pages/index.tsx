@@ -101,10 +101,10 @@ export default function TripFilter() {
       if (!theme) throw new Error("나들이 테마를 선택해 주세요.");
 
       // 인원수별 금액
-      const perPersonBudget = Number(budget ?? 0);
+      const perPersonBudget = Number(budget ?? 0) * 10000;
 
       //isOneWay: "편도"면 true, "왕복"이면 false
-      const isOneWay =
+      const oneWay =
         typeof guideType === "string" ? /편도/.test(guideType) : !!guideType;
 
       const payload: GuideRequestPayload = {
@@ -115,7 +115,7 @@ export default function TripFilter() {
         date, // "yyyy-MM-dd"
         timeTable: buildTimeTable(startTime, endTime), // "HH:mm-HH:mm"
         theme: String(theme), // String
-        isOneWay, // boolean (true=편도, false=왕복)
+        oneWay, // boolean (true=편도, false=왕복)
       };
 
       const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!

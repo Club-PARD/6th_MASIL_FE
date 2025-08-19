@@ -11,7 +11,7 @@ export interface GuideRequestPayload {
   date: string;
   timeTable: string;
   theme: string;
-  isOneWay: boolean;
+  oneWay: boolean;
 }
 
 // 가이드 결과 타입
