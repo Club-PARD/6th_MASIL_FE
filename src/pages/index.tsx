@@ -379,7 +379,6 @@ export default function TripFilter() {
           )}
 
           {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
-       
             {submitting && <stop />}
           
           {errorMsg && (
