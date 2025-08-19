@@ -120,6 +120,7 @@ export default function TripFilter() {
       const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/trips"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
+      // 전역 상태 관리에 저장
       setGuideResults(res.data.responsePlanDtos);
       
       alert("가이드 요청이 접수되었습니다!");
