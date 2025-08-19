@@ -44,13 +44,13 @@ const toHM = (t?: string) => {
   return t;
 };
 
-// "HH:mm-HH:mm" 생성 + 검증
+// "HH:mm~HH:mm" 생성 + 검증
 const buildTimeTable = (start?: string, end?: string) => {
   const s = toHM(start);
   const e = toHM(end);
   if (!s || !e) return "";
   if (s >= e) throw new Error("도착 시간은 출발 시간보다 늦어야 합니다.");
-  return `${s}~${e}`; // 예: "09:00-18:00"
+  return `${s}~${e}`; // 예: "09:00~18:00"
 };
 
 // ---------- 컴포넌트 ----------
@@ -87,6 +87,9 @@ export default function TripFilter() {
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
   const weekday = date ? weekdays[new Date(date).getDay()] : "";
 
+  // 출발일/시간 값 존재 여부 플래그
+  const hasSchedule = !!date && !!startTime && !!endTime;
+
   // 서버 전송
   const handleSubmit = async () => {
     try {
@@ -103,7 +106,7 @@ export default function TripFilter() {
       // 인원수별 금액
       const perPersonBudget = Number(budget ?? 0) * 10000;
 
-      //isOneWay: "편도"면 true, "왕복"이면 false
+      // isOneWay: "편도"면 true, "왕복"이면 false
       const oneWay =
         typeof guideType === "string" ? /편도/.test(guideType) : !!guideType;
 
@@ -113,12 +116,12 @@ export default function TripFilter() {
         headcount: Number(people ?? 0), // int
         transportation: String(car), // String
         date, // "yyyy-MM-dd"
-        timeTable: buildTimeTable(startTime, endTime), // "HH:mm-HH:mm"
+        timeTable: buildTimeTable(startTime, endTime), // "HH:mm~HH:mm"
         theme: String(theme), // String
         oneWay, // boolean (true=편도, false=왕복)
       };
 
-      const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
+      const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/plan";
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
       // 전역 상태 관리에 저장
@@ -127,10 +130,10 @@ export default function TripFilter() {
       alert("가이드 요청이 접수되었습니다!");
       console.log("✅ 응답:", res.data);
     } catch (err: any) {
-      console.error("❌ handleSubmit error:", err); // ✅ 전체 에러 객체 출력
+      console.error("❌ handleSubmit error:", err);
       if (axios.isAxiosError(err)) {
-        console.error("📡 axios error response:", err.response); // 서버 응답 있을 때
-        console.error("📡 axios error request:", err.request); // 요청은 갔지만 응답 없을 때
+        console.error("📡 axios error response:", err.response);
+        console.error("📡 axios error request:", err.request);
       }
 
       const msg = err?.message || "요청 중 오류가 발생했습니다.";
@@ -141,7 +144,7 @@ export default function TripFilter() {
     }
   };
 
-  //마지막 마실 vaildiator
+  // 마지막 마실 validator
   const isFormValid =
     !!origin &&
     !!date &&
@@ -210,8 +213,7 @@ export default function TripFilter() {
           />
         </div>
         {/* 본문 */}
-        <section className="flex flex-col items-center justify-center w-[1120px] h-96 bg-white rounded-2xl px-[91px] mx-auto -mt-30 relative z-10 shadow-2xl">
-          {/* 다음 우편번호 API */}
+      <section className="flex flex-col items-center justify-center w-full max-w-[1120px] bg-white rounded-2xl px-12 py-10 mx-auto -mt-30 relative z-10 shadow-2xl">          {/* 다음 우편번호 API */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
             strategy="afterInteractive"
@@ -220,7 +222,11 @@ export default function TripFilter() {
           {/* 출발지 */}
           <div className="text-center text-black text-xl">출발지</div>
           <div className="cursor-pointer select-none" onClick={openPostcode}>
-            <div className="mt-1 text-center text-3xl font-semibold underline">
+            <div
+              className={`mt-1 text-center text-3xl font-semibold ${
+                origin ? "" : "underline"
+              }`}
+            >
               {origin || "검색"}
             </div>
           </div>
@@ -231,7 +237,9 @@ export default function TripFilter() {
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">출발일 및 소요시간</div>
               <div
-                className="mt-1 text-3xl font-semibold underline"
+                className={`mt-1 text-3xl font-semibold ${
+                  hasSchedule ? "" : "underline"
+                }`}
                 onClick={() => setIsModalOpen(true)}
                 role="button"
                 tabIndex={0}
@@ -292,7 +300,9 @@ export default function TripFilter() {
             <div className="cursor-pointer select-none">
               <div className="text-black text-xl">이동수단</div>
               <div
-                className="mt-1 text-3xl font-semibold underline"
+                className={`mt-1 text-3xl font-semibold ${
+                  car ? "" : "underline"
+                }`}
                 onClick={() => setIsMoveOpen(true)}
                 role="button"
                 tabIndex={0}
@@ -386,10 +396,6 @@ export default function TripFilter() {
 
           {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
           {submitting && <LoadingScreen />}
-
-          {errorMsg && (
-            <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
-          )}
         </section>
       </div>
     </div>
