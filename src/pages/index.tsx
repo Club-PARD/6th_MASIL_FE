@@ -146,7 +146,7 @@ export default function TripFilter() {
     (budget ?? 0) > 0;
 
   return (
-    <>
+    <div className="w-full min-h-lvh bg-neutral-100">
       {/* 캐러셀 */}
       <div className="w-full">
         <div className="w-full mx-auto relative">
@@ -203,7 +203,7 @@ export default function TripFilter() {
           />
         </div>
         {/* 본문 */}
-        <section className="w-[1120px] h-96 bg-neutral-100 rounded-2xl p-8 mx-auto -mt-30 relative z-10">
+        <section className="w-[1120px] h-96 bg-white rounded-2xl p-8 mx-auto -mt-30 relative z-10">
           {/* 다음 우편번호 API */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
@@ -377,6 +377,6 @@ export default function TripFilter() {
           )}
         </section>
       </div>
-    </>
+    </div>
   );
 }
