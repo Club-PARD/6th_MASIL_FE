@@ -170,35 +170,35 @@ export default function TripFilter() {
           >
             <SwiperSlide>
               <img
-                src="/t2.svg"
+                src="/1.svg"
                 alt="배너1"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/t2.svg"
+                src="/2.svg"
                 alt="배너2"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/t2.svg"
+                src="/3.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/t2.svg"
+                src="/4.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/t2.svg"
+                src="/5.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
