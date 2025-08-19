@@ -378,9 +378,7 @@ export default function TripFilter() {
           )}
 
           {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
-       
-            {submitting && <stop />}
-          }
+          {submitting && <LoadingScreen />}
           {errorMsg && (
             <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
           )}
