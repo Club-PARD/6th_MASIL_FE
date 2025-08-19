@@ -50,7 +50,7 @@ const buildTimeTable = (start?: string, end?: string) => {
   const e = toHM(end);
   if (!s || !e) return "";
   if (s >= e) throw new Error("도착 시간은 출발 시간보다 늦어야 합니다.");
-  return `${s}-${e}`; // 예: "09:00-18:00"
+  return `${s}~${e}`; // 예: "09:00-18:00"
 };
 
 // ---------- 컴포넌트 ----------
@@ -118,15 +118,21 @@ export default function TripFilter() {
         oneWay, // boolean (true=편도, false=왕복)
       };
 
-      const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
+      const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/plan"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
       const res = await axios.post<GuideResultResponse>(API_URL, payload);
 
       // 전역 상태 관리에 저장
       setGuideResults(res.data.responsePlanDtos);
-      
+
       alert("가이드 요청이 접수되었습니다!");
       console.log("✅ 응답:", res.data);
     } catch (err: any) {
+      console.error("❌ handleSubmit error:", err); // ✅ 전체 에러 객체 출력
+      if (axios.isAxiosError(err)) {
+        console.error("📡 axios error response:", err.response); // 서버 응답 있을 때
+        console.error("📡 axios error request:", err.request); // 요청은 갔지만 응답 없을 때
+      }
+
       const msg = err?.message || "요청 중 오류가 발생했습니다.";
       setErrorMsg(msg);
       alert(msg);
@@ -379,8 +385,8 @@ export default function TripFilter() {
           )}
 
           {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
-            {submitting && <LoadingScreen />}
-          
+          {submitting && <LoadingScreen />}
+
           {errorMsg && (
             <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
           )}
