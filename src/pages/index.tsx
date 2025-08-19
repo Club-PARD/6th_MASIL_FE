@@ -33,6 +33,7 @@ import BudgetModal from "@/components/BudgetModal";
 
 import axios from "axios";
 import Image from "next/image";
+import { GuideRequestPayload, GuideResultResponse } from "./apis/guideApi";
 
 // ---------- 유틸 함수 ----------
 const toHM = (t?: string) => {
@@ -105,7 +106,7 @@ export default function TripFilter() {
       const isOneWay =
         typeof guideType === "string" ? /편도/.test(guideType) : !!guideType;
 
-      const payload = {
+      const payload: GuideRequestPayload = {
         origin, // String
         budget: perPersonBudget, // int (1인 금액)
         headcount: Number(people ?? 0), // int
@@ -117,7 +118,9 @@ export default function TripFilter() {
       };
 
       const API_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "") + "/trips"; // 여기 바꿔야됌 수정 안하면 안돌아감 까먹지 말기!~!~!~!~!~!
-      const res = await axios.post(API_URL, payload);
+      const res = await axios.post<GuideResultResponse>(API_URL, payload);
+
+      setGuideResults(res.data.responsePlanDtos);
       
       alert("가이드 요청이 접수되었습니다!");
       console.log("✅ 응답:", res.data);
