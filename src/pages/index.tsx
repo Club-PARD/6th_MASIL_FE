@@ -78,7 +78,7 @@ export default function TripFilter() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // 지도 api
+  // 지도 api 
   const openPostcode = () => {
     new (window as any).daum.Postcode({
       oncomplete: function (data: any) {
