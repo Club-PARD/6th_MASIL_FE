@@ -289,7 +289,7 @@ export default function TripFilter() {
                 </button>
                 <span className="text-2xl font-extrabold px-1">{people}</span>
                 <button
-                  onClick={() => setPeople(Math.min(9, people + 1))}
+                  onClick={() => setPeople(Math.min(10, people + 1))}
                   disabled={people === 10}
                   className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
                     people === 10
