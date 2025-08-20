@@ -86,18 +86,24 @@ export default function MoveModal({ open, onClose }: Props) {
             // 공통 클래스
             const base =
               "group w-[230px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
-            // 호버 반전(선택 여부와 무관)
+
+            // 배경/테두리/텍스트 색
+            const selectedCls = selected
+              ? "bg-[#FE7600] border-[#FE7600] text-white"
+              : "bg-white border-gray-200 text-[#282828]";
+
+            // 호버 시 색상 반전
             const hoverCls =
-              "bg-white border-gray-200 hover:bg-orange-500 hover:border-orange-500 hover:text-white";
+              "hover:bg-orange-500 hover:border-orange-500 hover:text-white";
 
             return (
               <button
                 key={value}
                 onClick={() => {
                   setCar(value);
-                  onClose(); // 배너 변화 즉시 확인하려면 이 줄을 주석 처리
+                  onClose(); // 배너 변화 즉시 확인하려면 주석 처리
                 }}
-                className={[base, hoverCls].join(" ")}
+                className={[base, selectedCls, hoverCls].join(" ")}
               >
                 <div className="flex flex-col items-center">
                   <Image
@@ -107,14 +113,7 @@ export default function MoveModal({ open, onClose }: Props) {
                     height={96}
                     priority
                   />
-                  <div
-                    className={[
-                      "mt-4 text-lg font-semibold transition-colors",
-                      selected
-                        ? "text-[#282828] group-hover:text-white"
-                        : "text-[#282828] group-hover:text-white",
-                    ].join(" ")}
-                  >
+                  <div className="mt-4 text-lg font-semibold transition-colors">
                     {label}
                   </div>
                 </div>
