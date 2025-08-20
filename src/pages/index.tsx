@@ -176,36 +176,36 @@ export default function TripFilter() {
           >
             <SwiperSlide>
               <img
-                src="/banner/t1.svg"
+                src="/1.svg"
                 alt="배너1"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/banner/t2.svg"
+                src="/2.svg"
                 alt="배너2"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/banner/t3.svg"
+                src="/3.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/banner/t4.svg"
-                alt="배너4"
+                src="/4.svg"
+                alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/banner/t5.svg"
-                alt="배너5"
+                src="/5.svg"
+                alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
