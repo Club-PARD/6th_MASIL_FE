@@ -46,7 +46,7 @@ export default function BudgetModal({ open, onClose }: Props) {
       role="dialog"
     >
       <div
-        className="flex flex-col justify-center items-center rounded-2xl bg-[bg-[#f5f5f5]] w-[632px] p-10 gap-[15px] shadow-xl"
+        className="flex flex-col justify-center items-center rounded-2xl bg-[#f5f5f5] w-[632px] p-10 gap-[15px] shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col justify-center items-center w-full">
