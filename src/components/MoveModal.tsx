@@ -88,7 +88,7 @@ export default function MoveModal({ open, onClose }: Props) {
               "group w-[230px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
             // 호버 반전(선택 여부와 무관)
             const hoverCls =
-              "bg-white border-gray-200 hover:bg-orange-500 hover:border-orange-500 hover:text-white hover:shadow-lg";
+              "bg-white border-gray-200 hover:bg-orange-500 hover:border-orange-500 hover:text-white";
 
             return (
               <button
