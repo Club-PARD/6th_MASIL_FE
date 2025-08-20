@@ -162,7 +162,7 @@ export default function TripFilter() {
     (budget ?? 0) > 0;
 
   return (
-    <div className="w-full min-h-lvh bg-neutral-100">
+    <div className="w-full min-h-lvh bg-[#f5f5f5]">
       {/* 캐러셀 */}
       <div className="w-full">
         <div className="w-full mx-auto relative">
@@ -278,9 +278,9 @@ export default function TripFilter() {
               <div className="mt-1 flex items-center justify-center gap-3">
                 <button
                   onClick={() => setPeople(Math.max(0, people - 1))}
-                  disabled={people === 0}
+                  disabled={people === 1}
                   className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
-                    people === 0
+                    people === 1
                       ? "bg-[#C2C2C2] text-white cursor-not-allowed"
                       : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
                   }`}
@@ -289,10 +289,10 @@ export default function TripFilter() {
                 </button>
                 <span className="text-2xl font-extrabold px-1">{people}</span>
                 <button
-                  onClick={() => setPeople(Math.min(9, people + 1))}
-                  disabled={people === 9}
+                  onClick={() => setPeople(Math.min(10, people + 1))}
+                  disabled={people === 10}
                   className={`size-8 rounded-full text-lg font-bold transition-colors duration-200 ${
-                    people === 9
+                    people === 10
                       ? "bg-[#C2C2C2] text-white cursor-not-allowed"
                       : "bg-[#282828] text-white hover:bg-[#FE7600] active:scale-95"
                   }`}
@@ -341,7 +341,7 @@ export default function TripFilter() {
                 }
               >
                 {budget != null && budget * people > 0
-                  ? `${budget * people}만원`
+                  ? `총 ${budget * people}만원`
                   : "미정"}
               </div>
             </div>

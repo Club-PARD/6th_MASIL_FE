@@ -12,9 +12,6 @@ import {
 } from "@/stores/useTripStore";
 import { useGuideStore } from "@/stores/useGuideStore";
 
-
-
-// test
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -31,8 +28,6 @@ export default function GuidePage() {
 
   // test
   const { setGuideResults } = useGuideStore();
-
-  // const downloadDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const res = {
@@ -100,9 +95,9 @@ export default function GuidePage() {
     };
     setGuideResults(res.responsePlanDtos);
   }, []);
-
+  
   return (
-    <div className="relative w-full min-h-screen bg-[#FFA95E] overflow-">
+    <div className="relative w-full min-h-screen">
       {/* 배경 이미지 */}
       <Image
         src="/guide_bg.svg"
@@ -128,7 +123,7 @@ export default function GuidePage() {
 
         <div className="flex flex-col items-center justify-center w-full py-[30px] gap-[30px]">
           {/* 사용자 정보 카드 */}
-          <div className="flex flex-col items-center justify-center w-[1083px] rounded-2xl bg-white px-4 md:px-[91px] py-[30px] gap-[10px] text-[#282828] text-lg md:text-xl font-normal font-['Pretendard'] flex-shrink-0">
+          <div className="flex flex-col items-center justify-center w-[1121px] rounded-2xl bg-white px-4 md:px-[91px] py-[40px] gap-[10px] text-[#282828] text-lg md:text-xl font-normal font-['Pretendard'] flex-shrink-0">
             <div className="flex flex-col items-center justify-center gap-[8px]">
               <p>출발지</p>
               <p className="text-3xl font-semibold">{origin}</p>
@@ -138,7 +133,7 @@ export default function GuidePage() {
                 <p>출발일</p>
                 <div className="flex flex-col items-center justify-center font-semibold">
                   <div className="text-2xl">{date}</div>
-                  <div className="text-xl">
+                  <div className="flex items-center justify-center w-[180px] text-xl">
                     {startTime}
                     {endTime}
                     {guideType}
@@ -147,19 +142,19 @@ export default function GuidePage() {
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>인원수</p>
-                <p className="text-3xl font-semibold">{people}명</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">{people}명</p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>이동수단</p>
-                <p className="text-3xl font-semibold">{car}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">{car}</p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>예산</p>
-                <p className="text-3xl font-semibold">{budget}만원</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">총 {budget * people}만원</p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>나들이 테마</p>
-                <p className="text-3xl font-semibold">{theme}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">{theme}</p>
               </div>
             </div>
           </div>
@@ -176,7 +171,7 @@ export default function GuidePage() {
 
           {/* 다시 추천해주세요 버튼 */}
           {/* <button
-          className="flex items-center justify-center h-14 px-[25px] py-5 bg-white rounded-[5px] shadow-sm text-[#282828] text-xl font-semibold font-['Pretendard'] gap-[8px] hover:bg-neutral-100"
+          className="flex items-center justify-center h-14 px-[25px] py-5 bg-white rounded-[5px] shadow-sm text-[#282828] text-xl font-semibold font-['Pretendard'] gap-[8px] hover:bg-[#f5f5f5]"
           // onClick={}
         >
           <Image src={reset_orange} alt="reset" width={21} height={21} />

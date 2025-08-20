@@ -27,12 +27,12 @@ export default function GuideDetailCard({ item }: GuideDetailCardProps) {
         {(item.duration || item.cost) && (
           <div className="flex flex-row w-full justify-start pb-[19px] gap-[10px]">
             {item.duration && (
-              <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
-                {item.duration}
+              <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-[#f5f5f5] text-[#757575] text-base">
+                {item.duration}분
               </div>
             )}
             {item.cost != null && (
-              <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-neutral-100 text-[#757575] text-base">
+              <div className="flex items-center justify-center min-w-[80px] px-2.5 py-[8px] rounded-sm bg-[#f5f5f5] text-[#757575] text-base">
                 {item.cost}원
               </div>
             )}

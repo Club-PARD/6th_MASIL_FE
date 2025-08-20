@@ -45,7 +45,7 @@ export interface GuideDetailResponse {
 export const guideApi = {
 
   // 가이드 상세 정보 (GET)
-  async getGuideDetail(planId: number): Promise<GuideDetailResponse> {
+  async getGuideDetail(planId: number | null): Promise<GuideDetailResponse> {
     try {
       const response = await axios.get<GuideDetailResponse>(
         `${API_BASE_URL}/plan/${planId}`,

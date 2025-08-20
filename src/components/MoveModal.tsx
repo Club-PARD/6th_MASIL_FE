@@ -20,10 +20,14 @@ type Props = {
   onClose: () => void;
 };
 
-const CARDS: { value: "자차" | "대중교통" | "도보"; label: string; img: string }[] = [
-  { value: "자차",     label: "자차",     img: "/bus.svg"  }, // 왼쪽
+const CARDS: {
+  value: "자차" | "대중교통" | "도보";
+  label: string;
+  img: string;
+}[] = [
+  { value: "자차", label: "자차", img: "/bus.svg" }, // 왼쪽
   { value: "대중교통", label: "대중교통", img: "/bus2.svg" }, // 가운데
-  { value: "도보",     label: "도보",     img: "/run.svg"  }, // 오른쪽
+  { value: "도보", label: "도보", img: "/run.svg" }, // 오른쪽
 ];
 
 export default function MoveModal({ open, onClose }: Props) {
@@ -46,49 +50,60 @@ export default function MoveModal({ open, onClose }: Props) {
       role="dialog"
     >
       <div
-        className="w-[720px] max-w-[90vw] rounded-[22px] bg-white p-6 shadow-2xl"
+        className="flex flex-col items-center justify-center min-w-[30vw] rounded-[22px] bg-[#f5f5f5] p-6 p-10 gap-2.5 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 헤더 */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">이동수단</h2>
+        <div className="flex items-center justify-between w-full text-2xl">
+          <div className="text-[#282828] text-2xl font-semibold font-['Pretendard']">
+            이동수단
+          </div>
           <button
             aria-label="닫기"
-            className="rounded-full p-2 hover:bg-black/5 text-2xl leading-none"
+            className="rounded size-8 hover:bg-black/5"
             onClick={onClose}
           >
-            ×
+            ✕
           </button>
         </div>
 
         {/* 안내 배너 (선택값 반영) */}
-        <div className="mt-5 rounded-2xl bg-white ring-1 ring-gray-100 px-4 py-4 text-center text-[15px] font-semibold">
+        <div className="className={`flex items-center justify-center w-full h-[50px] py-3 bg-white rounded-[10px] text-base font-semibold font-['Pretendard']">
           {car ? (
-            <span className="text-center justify-start text-검정 text-base font-semibold font-['Pretendard'] leading-snug">{car}</span>
+            <span className="text-[#282828]">{car}</span>
           ) : (
-          <span className="text-center justify-start text-orange-500 text-base font-semibold font-['Pretendard'] leading-snug">나들이 갈 때 이용할 이동수단을 선택해 주세요</span>          )}
+            <span className="text-[#FE7600]">
+              나들이 갈 때 이용할 이동수단을 선택해 주세요
+            </span>
+          )}
         </div>
 
         {/* 옵션 그리드 */}
-        <div className="mt-6 grid grid-cols-3 gap-6">
+        <div className="flex flex-row items-center justify-center w-full grid grid-cols-3 gap-2">
           {CARDS.map(({ value, label, img }) => {
             const selected = car === value;
 
             // 공통 클래스
             const base =
-              "group h-56 rounded-2xl border-2 transition-colors shadow-sm flex items-center justify-center";
-            // 호버 반전(선택 여부와 무관)
+              "group w-[230px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
+
+            // 배경/테두리/텍스트 색
+            const selectedCls = selected
+              ? "bg-[#FE7600] border-[#FE7600] text-white"
+              : "bg-white border-gray-200 text-[#282828]";
+
+            // 호버 시 색상 반전
             const hoverCls =
-              "bg-white border-gray-200 hover:bg-orange-500 hover:border-orange-500 hover:text-white hover:shadow-lg";
+              "hover:bg-orange-500 hover:border-orange-500 hover:text-white";
 
             return (
               <button
                 key={value}
                 onClick={() => {
                   setCar(value);
-                  onClose(); // 배너 변화 즉시 확인하려면 이 줄을 주석 처리
+                  onClose(); // 배너 변화 즉시 확인하려면 주석 처리
                 }}
-                className={[base, hoverCls].join(" ")}
+                className={[base, selectedCls, hoverCls].join(" ")}
               >
                 <div className="flex flex-col items-center">
                   <Image
@@ -98,12 +113,7 @@ export default function MoveModal({ open, onClose }: Props) {
                     height={96}
                     priority
                   />
-                  <div
-                    className={[
-                      "mt-4 text-lg font-semibold",
-                      selected ? "text-black" : "text-black group-hover:text-white",
-                    ].join(" ")}
-                  >
+                  <div className="mt-4 text-lg font-semibold transition-colors">
                     {label}
                   </div>
                 </div>

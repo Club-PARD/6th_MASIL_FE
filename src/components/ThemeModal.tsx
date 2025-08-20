@@ -58,7 +58,7 @@ export default function ThemeModal({ open, onClose }: Props) {
       role="dialog"
     >
       <div
-        className="flex flex-col justify-center items-center rounded-2xl bg-neutral-100 w-[550px] p-10 gap-[15px] shadow-xl"
+        className="flex flex-col justify-center items-center rounded-2xl bg-[#f5f5f5] w-[550px] p-10 gap-[15px] shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 헤더 */}
