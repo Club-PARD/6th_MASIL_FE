@@ -18,6 +18,9 @@ type CardProps = {
 
 const Card = ({ planId, order, itemDtos }: CardProps) => {
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
+  const [isHiddenModalOpen, setIsHiddenModalOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  
 
   const handleOpen = () => {
     if (!isGuideModalOpen) {
@@ -38,6 +41,7 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
     <div
       className="flex flex-row w-[1121px] px-[40px] py-[20px] gap-[60px] bg-white rounded-[20px] cursor-pointer items-center justify-center text-[#282828] hover:text-[#FE7600] shadow-lg"
       onClick={handleOpen}
+      ref={exportRef}
     >
       <div className="flex-shrink-0 min-w-[180px]">
         <div className="text-3xl font-normal" style={{ fontFamily: 'yg-jalnan, sans-serif' }}>
@@ -76,7 +80,6 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
           onClick={(e) => {
             e.stopPropagation();
             handleDownload();
-            console.log("다운로드 실행");
           }}
         >
           다운로드
