@@ -20,10 +20,14 @@ type Props = {
   onClose: () => void;
 };
 
-const CARDS: { value: "자차" | "대중교통" | "도보"; label: string; img: string }[] = [
-  { value: "자차",     label: "자차",     img: "/bus.svg"  }, // 왼쪽
+const CARDS: {
+  value: "자차" | "대중교통" | "도보";
+  label: string;
+  img: string;
+}[] = [
+  { value: "자차", label: "자차", img: "/bus.svg" }, // 왼쪽
   { value: "대중교통", label: "대중교통", img: "/bus2.svg" }, // 가운데
-  { value: "도보",     label: "도보",     img: "/run.svg"  }, // 오른쪽
+  { value: "도보", label: "도보", img: "/run.svg" }, // 오른쪽
 ];
 
 export default function MoveModal({ open, onClose }: Props) {
@@ -46,7 +50,7 @@ export default function MoveModal({ open, onClose }: Props) {
       role="dialog"
     >
       <div
-        className="flex flex-col items-center justify-center w-[720px] max-w-[90vw] rounded-[22px] bg-[#f5f5f5] p-6 p-10 gap-2.5 shadow-2xl"
+        className="flex flex-col items-center justify-center min-w-[30vw] rounded-[22px] bg-[#f5f5f5] p-6 p-10 gap-2.5 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 헤더 */}
@@ -68,17 +72,20 @@ export default function MoveModal({ open, onClose }: Props) {
           {car ? (
             <span className="text-[#282828]">{car}</span>
           ) : (
-          <span className="text-[#FE7600]">나들이 갈 때 이용할 이동수단을 선택해 주세요</span>          )}
+            <span className="text-[#FE7600]">
+              나들이 갈 때 이용할 이동수단을 선택해 주세요
+            </span>
+          )}
         </div>
 
         {/* 옵션 그리드 */}
-        <div className="flex flex-row items-center justify-center w-full grid grid-cols-3 gap-6">
+        <div className="flex flex-row items-center justify-center w-full grid grid-cols-3 gap-2">
           {CARDS.map(({ value, label, img }) => {
             const selected = car === value;
 
             // 공통 클래스
             const base =
-              "group h-56 rounded-2xl transition-colors flex items-center justify-center";
+              "group w-[230px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
             // 호버 반전(선택 여부와 무관)
             const hoverCls =
               "bg-white border-gray-200 hover:bg-orange-500 hover:border-orange-500 hover:text-white hover:shadow-lg";
@@ -102,8 +109,10 @@ export default function MoveModal({ open, onClose }: Props) {
                   />
                   <div
                     className={[
-                      "mt-4 text-lg font-semibold",
-                      selected ? "text-black" : "text-black group-hover:text-white",
+                      "mt-4 text-lg font-semibold transition-colors",
+                      selected
+                        ? "text-[#282828] group-hover:text-white"
+                        : "text-[#282828] group-hover:text-white",
                     ].join(" ")}
                   >
                     {label}
