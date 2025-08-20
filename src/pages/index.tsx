@@ -78,7 +78,7 @@ export default function TripFilter() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // 지도 api
+  // 지도 api 
   const openPostcode = () => {
     new (window as any).daum.Postcode({
       oncomplete: function (data: any) {
@@ -176,35 +176,35 @@ export default function TripFilter() {
           >
             <SwiperSlide>
               <img
-                src="/1.svg"
+                src="/banner/1.svg"
                 alt="배너1"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/2.svg"
+                src="/banner/2.svg"
                 alt="배너2"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/3.svg"
+                src="/banner/3.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/4.svg"
+                src="/banner/4.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
             <SwiperSlide>
               <img
-                src="/5.svg"
+                src="/banner/5.svg"
                 alt="배너3"
                 className="w-full h-auto object-cover"
               />
