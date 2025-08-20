@@ -162,7 +162,7 @@ export default function TripFilter() {
     (budget ?? 0) > 0;
 
   return (
-    <div className="w-full min-h-lvh bg-neutral-100">
+    <div className="w-full min-h-lvh bg-[#f5f5f5]">
       {/* 캐러셀 */}
       <div className="w-full">
         <div className="w-full mx-auto relative">
@@ -341,7 +341,7 @@ export default function TripFilter() {
                 }
               >
                 {budget != null && budget * people > 0
-                  ? `${budget * people}만원`
+                  ? `총 ${budget * people}만원`
                   : "미정"}
               </div>
             </div>
