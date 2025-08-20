@@ -85,7 +85,7 @@ export default function MoveModal({ open, onClose }: Props) {
 
             // 공통 클래스
             const base =
-              "group w-[230px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
+              "group w-[200px] h-[175px] rounded-[10px] transition-colors flex items-center justify-center";
 
             // 배경/테두리/텍스트 색
             const selectedCls = selected
@@ -109,11 +109,11 @@ export default function MoveModal({ open, onClose }: Props) {
                   <Image
                     src={img}
                     alt={label}
-                    width={96}
-                    height={96}
+                    width={50}
+                    height={50}
                     priority
                   />
-                  <div className="mt-4 text-lg font-semibold transition-colors">
+                  <div className="mt-4 text-xl font-semibold transition-colors">
                     {label}
                   </div>
                 </div>
