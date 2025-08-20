@@ -27,74 +27,74 @@ export default function GuidePage() {
   const { guideResults } = useGuideStore();
 
   // test
-  const { setGuideResults } = useGuideStore();
+  // const { setGuideResults } = useGuideStore();
 
-  useEffect(() => {
-    const res = {
-      responsePlanDtos: [
-        {
-          order: 1,
-          planId: 1,
-          itemDtos: [
-            {
-              title: "이동",
-              order_num: 1,
-            },
-            {
-              title: "본태박물관에서 전시 관람",
-              order_num: 2,
-            },
-            {
-              title: "아침식사",
-              order_num: 3,
-            },
-            {
-              title: "초콜릿랜드에서 전시 관람",
-              order_num: 4,
-            },
-            {
-              title: "점심식사",
-              order_num: 5,
-            },
-            {
-              title: "무민랜드제주에서 전시 관람",
-              order_num: 6,
-            },
-            {
-              title: "제주유리박물관 방문",
-              order_num: 7,
-            },
-            {
-              title: "이동",
-              order_num: 8,
-            },
-          ],
-        },
-        {
-          order: 2,
-          planId: 2,
-          itemDtos: [
-            { title: "Plan2-Item1", order_num: 0 },
-            { title: "Plan2-Item2", order_num: 1 },
-            { title: "Plan2-Item3", order_num: 2 },
-            { title: "Plan2-Item1", order_num: 0 },
-            { title: "Plan2-Item2", order_num: 1 },
-            { title: "Plan2-Item3", order_num: 2 },
-            { title: "Plan2-Item1", order_num: 0 },
-            { title: "Plan2-Item2", order_num: 1 },
-            { title: "Plan2-Item3", order_num: 2 },
-            { title: "Plan2-Item1", order_num: 0 },
-            { title: "Plan2-Item2", order_num: 1 },
-            { title: "Plan2-Item3", order_num: 2 },
-            { title: "Plan2-Item1", order_num: 0 },
-            { title: "Plan2-Item2", order_num: 1 },
-            { title: "Plan2-Item3", order_num: 2 },
-          ],
-        },
-      ],
-    };
-    setGuideResults(res.responsePlanDtos);
-  }, []);
+  // useEffect(() => {
+  //   const res = {
+  //     responsePlanDtos: [
+  //       {
+  //         order: 1,
+  //         planId: 1,
+  //         itemDtos: [
+  //           {
+  //             title: "이동",
+  //             order_num: 1,
+  //           },
+  //           {
+  //             title: "본태박물관에서 전시 관람",
+  //             order_num: 2,
+  //           },
+  //           {
+  //             title: "아침식사",
+  //             order_num: 3,
+  //           },
+  //           {
+  //             title: "초콜릿랜드에서 전시 관람",
+  //             order_num: 4,
+  //           },
+  //           {
+  //             title: "점심식사",
+  //             order_num: 5,
+  //           },
+  //           {
+  //             title: "무민랜드제주에서 전시 관람",
+  //             order_num: 6,
+  //           },
+  //           {
+  //             title: "제주유리박물관 방문",
+  //             order_num: 7,
+  //           },
+  //           {
+  //             title: "이동",
+  //             order_num: 8,
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         order: 2,
+  //         planId: 2,
+  //         itemDtos: [
+  //           { title: "Plan2-Item1", order_num: 0 },
+  //           { title: "Plan2-Item2", order_num: 1 },
+  //           { title: "Plan2-Item3", order_num: 2 },
+  //           { title: "Plan2-Item1", order_num: 0 },
+  //           { title: "Plan2-Item2", order_num: 1 },
+  //           { title: "Plan2-Item3", order_num: 2 },
+  //           { title: "Plan2-Item1", order_num: 0 },
+  //           { title: "Plan2-Item2", order_num: 1 },
+  //           { title: "Plan2-Item3", order_num: 2 },
+  //           { title: "Plan2-Item1", order_num: 0 },
+  //           { title: "Plan2-Item2", order_num: 1 },
+  //           { title: "Plan2-Item3", order_num: 2 },
+  //           { title: "Plan2-Item1", order_num: 0 },
+  //           { title: "Plan2-Item2", order_num: 1 },
+  //           { title: "Plan2-Item3", order_num: 2 },
+  //         ],
+  //       },
+  //     ],
+  //   };
+  //   setGuideResults(res.responsePlanDtos);
+  // }, []);
   
   return (
     <div className="relative w-full min-h-screen">
