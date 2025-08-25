@@ -5,17 +5,17 @@
 
 <p align="center">
   <a href="https://naver.com">
-    <img alt="마실" title="마실" src="./public/logo.svg" width="45%">
+    <img alt="마실" title="마실" src="src/assets/img/logo.svg" width="45%">
   </a>
 </p>
 
 <br/>
 
-<img src="./public/banner/1.svg">
-<img src="./public/banner/2.svg">
-<img src="./public/banner/3.svg">
-<img src="./public/banner/4.svg">
-<img src="./public/banner/5.svg">
+<img src="src/assets/img/banner/1.svg">
+<img src="src/assets/img/banner/2.svg">
+<img src="src/assets/img/banner/3.svg">
+<img src="src/assets/img/banner/4.svg">
+<img src="src/assets/img/banner/5.svg">
 
 <br/>
 
@@ -42,5 +42,5 @@
 ----
 ----
 
-<img src="./public/quote.jpeg" />
+<img src="src/assets/img/quote.jpeg" />
 
