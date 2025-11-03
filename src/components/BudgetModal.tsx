@@ -7,6 +7,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
 };
+
 export default function BudgetModal({ open, onClose }: Props) {
   const { people } = usePeopleStore();
   const { budget, setBudget } = useBudgetStore();

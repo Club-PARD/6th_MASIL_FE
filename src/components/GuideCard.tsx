@@ -1,14 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { downloadElementAsImage } from "@/utils/downloadImage"; // download image from div
+import { ItemDto } from "@/types/guide";
 import GuideDetailModal from "./GuideDetailModal";
-
-// download image from div
-import { downloadElementAsImage } from "@/utils/downloadImage";
-import { useRef } from "react";
-
-type ItemDto = {
-  title: string;
-  order_num: number;
-};
 
 type CardProps = {
   planId: number | null; // 가이드 ID
@@ -20,7 +13,6 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
   const [isHiddenModalOpen, setIsHiddenModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  
 
   const handleOpen = () => {
     if (!isGuideModalOpen) {
@@ -44,7 +36,10 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
       ref={exportRef}
     >
       <div className="flex-shrink-0 min-w-[180px]">
-        <div className="text-3xl font-normal" style={{ fontFamily: 'yg-jalnan, sans-serif' }}>
+        <div
+          className="text-3xl font-normal"
+          style={{ fontFamily: "yg-jalnan, sans-serif" }}
+        >
           마실코스 {order}
         </div>
       </div>

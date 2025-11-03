@@ -10,6 +10,7 @@ const HOURS = Array.from(
   { length: 24 },
   (_, i) => `${String(i).padStart(2, "0")}:00`
 );
+
 const PAGE_SIZE = 6;
 
 export default function DateTimeModal({ onClose }: Props) {
@@ -24,7 +25,6 @@ export default function DateTimeModal({ onClose }: Props) {
     setGuideType,
   } = useTripStore();
 
-  // ── helpers ────────────────────────────────────────────────
   const fmt = (d: Date) => {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -32,7 +32,6 @@ export default function DateTimeModal({ onClose }: Props) {
     return `${y}-${m}-${dd}`;
   };
 
-  // ✅ 어떤 형식("08시", "08:00", "08:00일")이 와도 "08:00"으로 정규화 후 인덱스 검색
   const getIdx = (t?: string | null) => {
     if (!t) return -1;
     const s = String(t);
@@ -49,17 +48,17 @@ export default function DateTimeModal({ onClose }: Props) {
     return t;
   }, []);
 
-  // ── 달력 상태 ───────────────────────────────────────────────
+  // 달력 상태
   const base = date ? new Date(date) : new Date();
   const [viewYear, setViewYear] = useState(base.getFullYear());
   const [viewMonth, setViewMonth] = useState(base.getMonth()); // 0~11
 
-  // 해당 월만(1일~마지막날). **일요일 시작 정렬**
+  // 해당 월만 (1일 ~ 마지막날) ** 일요일 시작 정렬 **
   const { calendarCells, prevDisabled } = useMemo(() => {
     const firstOfMonth = new Date(viewYear, viewMonth, 1);
     const lastDay = new Date(viewYear, viewMonth + 1, 0).getDate();
 
-    // 일요일=0 ... 토요일=6
+    // 일요일 = 0 ... 토요일 = 6
     const firstDaySunStart = firstOfMonth.getDay();
 
     // 앞쪽 빈칸
@@ -92,7 +91,7 @@ export default function DateTimeModal({ onClose }: Props) {
 
   const selectedDateObj = useMemo(() => (date ? new Date(date) : null), [date]);
 
-  // ── 시간대 페이징 ───────────────────────────────────────────
+  // 시간대 페이징
   const startIdx = Math.max(0, getIdx(startTime));
   const endIdx = Math.max(0, getIdx(endTime));
   const [startPage, setStartPage] = useState(Math.floor(startIdx / PAGE_SIZE));
@@ -106,7 +105,7 @@ export default function DateTimeModal({ onClose }: Props) {
   const startSlice = useMemo(() => sliceForPage(startPage), [startPage]);
   const endSlice = useMemo(() => sliceForPage(endPage), [endPage]);
 
-  // ── 헤더 요약 (요일 포함) ───────────────────────────────────
+  // 헤더 요약 (요일 포함)
   const headerText = useMemo(() => {
     if (!selectedDateObj) {
       return "아래 달력에서 출발일을 선택해 주세요";
@@ -126,7 +125,7 @@ export default function DateTimeModal({ onClose }: Props) {
 
   const monthLabel = `${viewYear}. ${String(viewMonth + 1).padStart(2, "0")}`;
 
-  // ── 제약: 도착은 출발+2시간 이상 (출발+1은 선택 불가) ────
+  // 조건: 도착은 출발 + 2시간 이상 (출발+1은 선택 불가)
   const canApply =
     !!startTime && !!endTime && getIdx(endTime) > getIdx(startTime) + 1;
   !!guideType;

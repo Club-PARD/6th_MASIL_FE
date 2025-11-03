@@ -1,16 +1,16 @@
-// app/components/TripFilter.tsx
 "use client";
 
 import { useState } from "react";
 import Script from "next/script";
 
-import { useRouter } from "next/router"; "next/router";
+import { useRouter } from "next/router";
+("next/router");
 
-// ✅ Swiper 컴포넌트/모듈 임포트
+// Swiper 컴포넌트/모듈 임포트
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-// ✅ Swiper 스타일
+// Swiper 스타일
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -34,9 +34,9 @@ import ThemeModal from "@/components/ThemeModal";
 import BudgetModal from "@/components/BudgetModal";
 import LoadingScreen from "@/components/LoadingScreen";
 
-import axios from "axios";
 import Image from "next/image";
-import { GuideRequestPayload, GuideResultResponse } from "./apis/guideApi";
+import { GuideRequestPayload, GuideResultResponse } from "@/types/guide";
+import { guideApi } from "@/lib/guideApi";
 
 // ---------- 유틸 함수 ----------
 const toHM = (t?: string) => {
@@ -55,7 +55,6 @@ const buildTimeTable = (start?: string, end?: string) => {
   return `${s}~${e}`; // 예: "09:00~18:00"
 };
 
-// ---------- 컴포넌트 ----------
 export default function TripFilter() {
   const router = useRouter();
 
@@ -78,7 +77,7 @@ export default function TripFilter() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // 지도 api 
+  // 지도 api
   const openPostcode = () => {
     new (window as any).daum.Postcode({
       oncomplete: function (data: any) {
@@ -125,22 +124,16 @@ export default function TripFilter() {
         oneWay, // boolean (true=편도, false=왕복)
       };
 
-      const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL + "/plan";
-
-      const res = await axios.post<GuideResultResponse>(API_URL, payload);
+      const res = await guideApi.requestGuide(payload);
 
       // 전역 상태 관리에 저장
-      setGuideResults(res.data.responsePlanDtos);
+      setGuideResults(res.responsePlanDtos);
 
       //alert밑에
       router.push("/guide");
-      console.log("✅ 응답:", res.data);
+      console.log("✅ 응답:", res);
     } catch (err: any) {
       console.error("❌ handleSubmit error:", err);
-      if (axios.isAxiosError(err)) {
-        console.error("📡 axios error response:", err.response);
-        console.error("📡 axios error request:", err.request);
-      }
 
       const msg = err?.message || "요청 중 오류가 발생했습니다.";
       setErrorMsg(msg);
@@ -219,12 +212,13 @@ export default function TripFilter() {
           />
         </div>
         {/* 본문 */}
-      <section className="flex flex-col items-center justify-center w-full max-w-[1120px] bg-white rounded-2xl px-12 py-10 mx-auto -mt-30 relative z-10 shadow-2xl">          {/* 다음 우편번호 API */}
+        <section className="flex flex-col items-center justify-center w-full max-w-[1120px] bg-white rounded-2xl px-12 py-10 mx-auto -mt-30 relative z-10 shadow-2xl">
+          {" "}
+          {/* 다음 우편번호 API */}
           <Script
             src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
             strategy="afterInteractive"
           />
-
           {/* 출발지 */}
           <div className="text-center text-black text-xl">출발지</div>
           <div className="cursor-pointer select-none" onClick={openPostcode}>
@@ -236,7 +230,6 @@ export default function TripFilter() {
               {origin || "검색"}
             </div>
           </div>
-
           {/* 그리드 */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6 text-center">
             {/* 출발일 및 소요시간 */}
@@ -376,7 +369,6 @@ export default function TripFilter() {
               onClose={() => setIsThemeOpen(false)}
             />
           )}
-
           {/* 버튼 */}
           <div className="flex justify-center w-full mt-8">
             <button
@@ -395,11 +387,9 @@ export default function TripFilter() {
               </span>
             </button>
           </div>
-
           {errorMsg && (
             <p className="mt-3 text-center text-red-600 text-sm">{errorMsg}</p>
           )}
-
           {/* ✅ 전송 중일 때 풀화면 로딩 화면 */}
           {submitting && <LoadingScreen />}
         </section>

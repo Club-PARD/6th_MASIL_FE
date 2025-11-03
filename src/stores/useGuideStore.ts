@@ -1,31 +1,13 @@
 import { create } from "zustand";
-
-export type GuidePlan = {
-  order: number | null;
-  planId: number | null;
-  itemDtos: GuideDetailItem[] | null;
-};
-
-export type GuideDetailItem = {
-  title: string;
-  order_num: number;
-  duration?: string | null;
-  start_time?: string | null;
-  end_time?: string | null;
-  cost?: number | null;
-  transport?: boolean | null;
-  link_url?: string | null;
-  description?: string | null;
-  place_name?: string | null;
-};
+import { ResponsePlanDto, GuideDetailItem } from "@/types/guide";
 
 export type GuideState = {
-  guideResults: GuidePlan[] | null;
+  guideResults: ResponsePlanDto[] | null;
   guideDetail: GuideDetailItem[] | null;
   isLoading: boolean;
   error: string | null;
 
-  setGuideResults: (results: GuidePlan[]) => void; // data.responsePlanDtos 가 저장될거임
+  setGuideResults: (results: ResponsePlanDto[]) => void; // data.responsePlanDtos 가 저장될거임
   setGuideDetail: (detail: GuideDetailItem[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;

@@ -10,7 +10,7 @@ import {
   useTripStore,
 } from "@/stores/useTripStore";
 import { useGuideStore } from "@/stores/useGuideStore";
-import { guideApi } from "@/pages/apis/guideApi";
+import { guideApi } from "@/lib/guideApi";
 
 // download image from div
 import { useRef } from "react";
@@ -79,82 +79,6 @@ export default function GuideDetailModal({
     try {
       // 찐 API 호출
       const data = await guideApi.getGuideDetail(planId);
-
-      // Mock Data test
-      // const data = {
-      //   itemDtos: [
-      //     {
-      //       title: "이동",
-      //       duration: "30분",
-      //       cost: 0,
-      //       transport: true,
-      //       order_num: 1,
-      //       start_time: "05:00",
-      //     },
-      //     {
-      //       title: "본태박물관에서 전시 관람",
-      //       duration: "120분",
-      //       cost: 15000,
-      //       description: "현대 미술 전시를 관람할 수 있습니다.",
-      //       order_num: 2,
-      //       start_time: "05:30",
-      //       link_url: "http://place.map.kakao.com/18539729",
-      //       place_name: "본태박물관",
-      //     },
-      //     {
-      //       title: "아침식사",
-      //       duration: "60분",
-      //       cost: null,
-      //       order_num: 3,
-      //       start_time: "08:00",
-      //     },
-      //     {
-      //       title: "초콜릿랜드에서 전시 관람",
-      //       duration: "120분",
-      //       cost: 10000,
-      //       description: "초콜릿에 관한 다양한 전시를 관람할 수 있습니다.",
-      //       order_num: 4,
-      //       start_time: "09:30",
-      //       link_url: "http://place.map.kakao.com/27600182",
-      //       place_name: "초콜릿랜드",
-      //     },
-      //     {
-      //       title: "점심식사",
-      //       duration: "60분",
-      //       cost: null,
-      //       order_num: 5,
-      //       start_time: "12:00",
-      //     },
-      //     {
-      //       title: "무민랜드제주에서 전시 관람",
-      //       duration: "120분",
-      //       cost: 12000,
-      //       description: "무민 캐릭터와 함께하는 전시를 관람할 수 있습니다.",
-      //       order_num: 6,
-      //       start_time: "13:30",
-      //       link_url: "http://place.map.kakao.com/1524439597",
-      //       place_name: "무민랜드제주",
-      //     },
-      //     {
-      //       title: "제주유리박물관 방문",
-      //       duration: "60분",
-      //       cost: 12000,
-      //       description: "추가 방문지",
-      //       order_num: 7,
-      //       start_time: "15:30",
-      //       link_url: "http://place.map.kakao.com/10799994",
-      //       place_name: "제주유리박물관",
-      //     },
-      //     {
-      //       title: "이동",
-      //       duration: "30분",
-      //       cost: 0,
-      //       transport: true,
-      //       order_num: 8,
-      //       start_time: "16:30",
-      //     },
-      //   ],
-      // };
 
       setGuideDetail(data.itemDtos); // 전역 상태 관리 GuideStore에 저장
     } catch (error: any) {

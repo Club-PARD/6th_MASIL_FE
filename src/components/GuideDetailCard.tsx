@@ -1,7 +1,7 @@
 import Image from "next/image";
 import pin_neutral from "@/assets/icons/pin_neutral.svg";
 
-import { GuideDetailItem } from "@/stores/useGuideStore";
+import { GuideDetailItem } from "@/types/guide";
 
 type GuideDetailCardProps = {
   item: GuideDetailItem;
@@ -20,7 +20,9 @@ export default function GuideDetailCard({ item }: GuideDetailCardProps) {
       <div className="flex flex-col w-full h-full border-l-3 border-[#C2C2C2] px-[15px] font-semibold}">
         {/* 장소 */}
         {item.title && (
-          <div className={`${item.transport ? "" : "text-[#FE7600]"}`}>{item.title}</div>
+          <div className={`${item.transport ? "" : "text-[#FE7600]"}`}>
+            {item.title}
+          </div>
         )}
 
         {/* 소요시간과 가격 */}
