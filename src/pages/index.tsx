@@ -65,7 +65,7 @@ export default function TripFilter() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
-  const { setGuideResults } = useGuideStore();
+  const { setGuideResults, setPlansId } = useGuideStore();
 
   // 모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -128,6 +128,7 @@ export default function TripFilter() {
 
       // 전역 상태 관리에 저장
       setGuideResults(res.responsePlanDtos);
+      setPlansId(res.plansId);
 
       //alert밑에
       router.push("/guide");

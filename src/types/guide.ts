@@ -24,6 +24,7 @@ export interface ResponsePlanDto {
 // 가이드 결과 타입
 export interface GuideResultResponse {
   responsePlanDtos: ResponsePlanDto[];
+  plansId: number;
 }
 
 export type GuideDetailItem = {
@@ -41,5 +42,5 @@ export type GuideDetailItem = {
 
 // 가이드 상세 타입
 export interface GuideDetailResponse {
-  itemDtos: GuideDetailItem[];
+  itemDetailsDtos: GuideDetailItem[];
 }

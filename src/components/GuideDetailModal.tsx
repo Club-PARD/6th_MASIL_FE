@@ -80,7 +80,7 @@ export default function GuideDetailModal({
       // 찐 API 호출
       const data = await guideApi.getGuideDetail(planId);
 
-      setGuideDetail(data.itemDtos); // 전역 상태 관리 GuideStore에 저장
+      setGuideDetail(data.itemDetailsDtos); // 전역 상태 관리 GuideStore에 저장
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -114,16 +114,16 @@ export default function GuideDetailModal({
             justifyContent: "flex-start",
             alignItems: "center",
             width: "1083px",
-            height: "700px",
+            maxHeight: "85vh",
             padding: "50px",
             borderRadius: "16px", // rounded-2xl
             color: "#282828",
             gap: "15px",
             boxShadow:
               "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
-            overflowY: "auto",
+            overflowY: "scroll",
             backgroundColor: "#ffffff",
-    position: "relative", // position 추가
+            position: "relative", // position 추가
           }}
         >
           {/* 헤더 */}
@@ -158,11 +158,15 @@ export default function GuideDetailModal({
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>인원수</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{people}명</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {people}명
+                </p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>이동수단</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{car}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {car}
+                </p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>예산</p>
@@ -172,7 +176,9 @@ export default function GuideDetailModal({
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>나들이 테마</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{theme}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {theme}
+                </p>
               </div>
             </div>
           </div>
@@ -186,7 +192,7 @@ export default function GuideDetailModal({
         </div>
 
         {/* 모달 밖 버튼 영역 */}
-        <div className="flex flex-row items-center justify-center gap-[10px] text-xl font-semibold font-['Pretendard']">
+        <div className="flex flex-row items-center justify-center gap-[10px] text-xl font-semibold font-['Pretendard'] ignore-screenshot">
           <button
             className="flex items-center justify-center w-40 h-15 rounded-[5px] bg-[#ECECEC] text-[#757575] gap-[10px] cursor-pointer hover:bg-[#f5f5f5] hover:text-[#282828]"
             onClick={onClose}

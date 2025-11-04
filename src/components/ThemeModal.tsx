@@ -13,21 +13,25 @@ const THEME_OPTIONS = [
     title: "축제·문화 탐방",
     subtitle: "축제, 박물관 관람",
     icon: "🎠",
+    value: "탐방",
   },
   {
     title: "원데이 클래스 체험",
     subtitle: "베이킹, 공방 체험",
     icon: "🎨",
+    value: "체험",
   },
   {
     title: "자연 경관 감상",
     subtitle: "공원, 산, 산책로 걷기",
     icon: "🏔️",
+    value: "관광",
   },
   {
     title: "쇼핑",
     subtitle: "쇼핑 거리, 시장 구경",
     icon: "🛍️",
+    value: "쇼핑",
   },
 ];
 
@@ -99,7 +103,7 @@ export default function ThemeModal({ open, onClose }: Props) {
                     setTheme("");
                     setHeaderText("원하시는 나들이 테마를 선택해 주세요");
                   } else {
-                    setTheme(option.title);
+                    setTheme(option.value);
                     setHeaderText(option.title);
                     onClose();
                   }

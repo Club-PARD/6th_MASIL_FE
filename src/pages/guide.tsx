@@ -1,6 +1,6 @@
 import Card from "@/components/GuideCard";
 import Image from "next/image";
-// import reset_orange from "@/assets/icons/reset_orange.svg";
+import reset_orange from "@/assets/icons/reset_orange.svg";
 
 import {
   useOriginStore,
@@ -12,8 +12,9 @@ import {
 } from "@/stores/useTripStore";
 import { useGuideStore } from "@/stores/useGuideStore";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { guideApi } from "@/lib/guideApi";
 
 export default function GuidePage() {
   const router = useRouter();
@@ -24,78 +25,33 @@ export default function GuidePage() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
-  const { guideResults } = useGuideStore();
+  const { plansId, guideResults, setPlansId, setGuideResults } = useGuideStore();
 
-  // test
-  // const { setGuideResults } = useGuideStore();
+    // 요청 상태
+    const [submitting, setSubmitting] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   const res = {
-  //     responsePlanDtos: [
-  //       {
-  //         order: 1,
-  //         planId: 1,
-  //         itemDtos: [
-  //           {
-  //             title: "이동",
-  //             order_num: 1,
-  //           },
-  //           {
-  //             title: "본태박물관에서 전시 관람",
-  //             order_num: 2,
-  //           },
-  //           {
-  //             title: "아침식사",
-  //             order_num: 3,
-  //           },
-  //           {
-  //             title: "초콜릿랜드에서 전시 관람",
-  //             order_num: 4,
-  //           },
-  //           {
-  //             title: "점심식사",
-  //             order_num: 5,
-  //           },
-  //           {
-  //             title: "무민랜드제주에서 전시 관람",
-  //             order_num: 6,
-  //           },
-  //           {
-  //             title: "제주유리박물관 방문",
-  //             order_num: 7,
-  //           },
-  //           {
-  //             title: "이동",
-  //             order_num: 8,
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         order: 2,
-  //         planId: 2,
-  //         itemDtos: [
-  //           { title: "Plan2-Item1", order_num: 0 },
-  //           { title: "Plan2-Item2", order_num: 1 },
-  //           { title: "Plan2-Item3", order_num: 2 },
-  //           { title: "Plan2-Item1", order_num: 0 },
-  //           { title: "Plan2-Item2", order_num: 1 },
-  //           { title: "Plan2-Item3", order_num: 2 },
-  //           { title: "Plan2-Item1", order_num: 0 },
-  //           { title: "Plan2-Item2", order_num: 1 },
-  //           { title: "Plan2-Item3", order_num: 2 },
-  //           { title: "Plan2-Item1", order_num: 0 },
-  //           { title: "Plan2-Item2", order_num: 1 },
-  //           { title: "Plan2-Item3", order_num: 2 },
-  //           { title: "Plan2-Item1", order_num: 0 },
-  //           { title: "Plan2-Item2", order_num: 1 },
-  //           { title: "Plan2-Item3", order_num: 2 },
-  //         ],
-  //       },
-  //     ],
-  //   };
-  //   setGuideResults(res.responsePlanDtos);
-  // }, []);
-  
+  const handleRefresh = async () => {
+    try {
+      const res = await guideApi.getNewGuide(plansId);
+      
+      setGuideResults(res.responsePlanDtos);
+      setPlansId(res.plansId);
+    } catch (err: any) {
+      console.error("❌ handleSubmit error:", err);
+
+      const msg = err?.message || "요청 중 오류가 발생했습니다.";
+      setErrorMsg(msg);
+      alert(msg);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <div className="relative w-full min-h-screen">
       {/* 배경 이미지 */}
@@ -142,19 +98,27 @@ export default function GuidePage() {
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>인원수</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{people}명</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {people}명
+                </p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>이동수단</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{car}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {car}
+                </p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>예산</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">총 {budget * people}만원</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  총 {budget * people}만원
+                </p>
               </div>
               <div className="flex flex-col items-center justify-start h-[80px] gap-[8px]">
                 <p>나들이 테마</p>
-                <p className="text-3xl font-semibold whitespace-nowrap">{theme}</p>
+                <p className="text-3xl font-semibold whitespace-nowrap">
+                  {theme}
+                </p>
               </div>
             </div>
           </div>
@@ -171,12 +135,12 @@ export default function GuidePage() {
 
           {/* 다시 추천해주세요 버튼 */}
           {/* <button
-          className="flex items-center justify-center h-14 px-[25px] py-5 bg-white rounded-[5px] shadow-sm text-[#282828] text-xl font-semibold font-['Pretendard'] gap-[8px] hover:bg-[#f5f5f5]"
-          // onClick={}
-        >
-          <Image src={reset_orange} alt="reset" width={21} height={21} />
-          다시 추천해 주세요
-        </button> */}
+            className="flex items-center justify-center h-14 px-[25px] py-5 bg-white rounded-[5px] shadow-sm text-[#282828] text-xl font-semibold font-['Pretendard'] gap-[8px] hover:bg-[#f5f5f5]"
+            onClick={handleRefresh}
+          >
+            <Image src={reset_orange} alt="reset" width={21} height={21} />
+            다시 추천해 주세요
+          </button> */}
         </div>
       </div>
     </div>
