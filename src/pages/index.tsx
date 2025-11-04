@@ -65,7 +65,7 @@ export default function TripFilter() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
-  const { setGuideResults } = useGuideStore();
+  const { setGuideResults, setPlansId } = useGuideStore();
 
   // 모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -125,9 +125,57 @@ export default function TripFilter() {
       };
 
       const res = await guideApi.requestGuide(payload);
+      // const res = {responsePlanDtos: [
+      //   {order: 1,
+      //     planId: 1,
+      //     itemDtos: [
+      //       {title: "가이드 1",
+      //       order_num: 1,},
+      //       {title: "가이드 1",
+      //       order_num: 2,},
+      //       {title: "가이드 1",
+      //       order_num: 3,},
+      //       {title: "가이드 1",
+      //       order_num: 4,},
+      //       {title: "가이드 1",
+      //       order_num: 5,},
+      //     ]
+      //   },
+      //   {order: 2,
+      //     planId: 2,
+      //     itemDtos: [
+      //       {title: "가이드 1",
+      //       order_num: 1,},
+      //       {title: "가이드 1",
+      //       order_num: 2,},
+      //       {title: "가이드 1",
+      //       order_num: 3,},
+      //       {title: "가이드 1",
+      //       order_num: 4,},
+      //       {title: "가이드 1",
+      //       order_num: 5,},
+      //     ]
+      //   },
+      //   {order: 3,
+      //     planId: 3,
+      //     itemDtos: [
+      //       {title: "가이드 1",
+      //       order_num: 1,},
+      //       {title: "가이드 1",
+      //       order_num: 2,},
+      //       {title: "가이드 1",
+      //       order_num: 3,},
+      //       {title: "가이드 1",
+      //       order_num: 4,},
+      //       {title: "가이드 1",
+      //       order_num: 5,},
+      //     ]
+      //   },
+      // ]};
 
       // 전역 상태 관리에 저장
       setGuideResults(res.responsePlanDtos);
+      setPlansId(res.plansId);
 
       //alert밑에
       router.push("/guide");

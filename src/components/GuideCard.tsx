@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import { downloadElementAsImage } from "@/utils/downloadImage"; // download image from div
 import { ItemDto } from "@/types/guide";
@@ -60,7 +62,7 @@ const Card = ({ planId, order, itemDtos }: CardProps) => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-[7px] flex-shrink-0">
+      <div className="flex flex-col gap-[7px] flex-shrink-0 ignore-screenshot">
         <button
           className="px-[15px] py-2.5 bg-[#f5f5f5] rounded-[5px] gap-2.5 text-[#FE7600] text-xl font-semibold font-['Pretendard'] hover:bg-[#FE7600] hover:text-white"
           onClick={(e) => {
