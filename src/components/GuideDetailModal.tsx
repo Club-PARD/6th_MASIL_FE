@@ -80,7 +80,7 @@ export default function GuideDetailModal({
       // 찐 API 호출
       const data = await guideApi.getGuideDetail(planId);
 
-      setGuideDetail(data.itemDtos); // 전역 상태 관리 GuideStore에 저장
+      setGuideDetail(data.itemDetailsDtos); // 전역 상태 관리 GuideStore에 저장
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -114,14 +114,14 @@ export default function GuideDetailModal({
             justifyContent: "flex-start",
             alignItems: "center",
             width: "1083px",
-            minHeight: "1000px",
+            maxHeight: "85vh",
             padding: "50px",
             borderRadius: "16px", // rounded-2xl
             color: "#282828",
             gap: "15px",
             boxShadow:
               "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
-            overflowY: "auto",
+            overflowY: "scroll",
             backgroundColor: "#ffffff",
             position: "relative", // position 추가
           }}

@@ -42,5 +42,5 @@ export type GuideDetailItem = {
 
 // 가이드 상세 타입
 export interface GuideDetailResponse {
-  itemDtos: GuideDetailItem[];
+  itemDetailsDtos: GuideDetailItem[];
 }
