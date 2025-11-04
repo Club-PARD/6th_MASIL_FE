@@ -84,7 +84,7 @@ export const guideApi = {
       );
     }
   },
-  async getNewGuide(plansId: number): Promise<GuideResultResponse> {
+  async getNewGuide(plansId: number | null): Promise<GuideResultResponse> {
     try {
       const response = await axios.get<GuideResultResponse>(
         `${API_BASE_URL}/api/plans/${plansId}`,

@@ -12,7 +12,7 @@ import {
 } from "@/stores/useTripStore";
 import { useGuideStore } from "@/stores/useGuideStore";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { guideApi } from "@/lib/guideApi";
 
@@ -25,16 +25,26 @@ export default function GuidePage() {
   const { car } = useMoveStore();
   const { budget } = useBudgetStore();
   const { theme } = useThemeStore();
-  const { guideResults } = useGuideStore();
+  const { plansId, guideResults, setPlansId, setGuideResults } = useGuideStore();
 
-  const { setGuideResults } = useGuideStore();
+    // 요청 상태
+    const [submitting, setSubmitting] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleRefresh = async () => {
     try {
-      // const res = guideApi.getNewGuide();
-      // setGuideResults(res.responsePlanDtos);
-    } catch (error) {
+      const res = await guideApi.getNewGuide(plansId);
       
+      setGuideResults(res.responsePlanDtos);
+      setPlansId(res.plansId);
+    } catch (err: any) {
+      console.error("❌ handleSubmit error:", err);
+
+      const msg = err?.message || "요청 중 오류가 발생했습니다.";
+      setErrorMsg(msg);
+      alert(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
